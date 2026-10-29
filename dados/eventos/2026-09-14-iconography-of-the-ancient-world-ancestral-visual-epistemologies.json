@@ -1,89 +1,65 @@
 {
   "titulo": "Iconography of the Ancient World: Ancestral Visual Epistemologies",
   "tipo": "III International Summer School",
+  "tipo_en": "III International Summer School",
   "data_inicio": "2026-09-14",
   "data_fim": "2026-09-18",
   "local": "Vitória/ES",
+  "local_en": "Vitória, Brazil",
   "imagem": "assets/imagens/escola-iconografia.jpg",
   "imagem_ajuste": "inteira",
   "imagem_descricao": "Arte da III International Summer School Iconography of the Ancient World, com fragmento de escultura antiga e uma pena",
-  "descricao": "Escola internacional itinerante de formação metodológica em iconografia para mestrandos, doutorandos e jovens pesquisadores em estudos do Antigo Oriente Próximo, estudos bíblicos e história das religiões. Organizada por Thomas Wagner (Bergische Universität Wuppertal) e Silas Klein Cardoso (FUV), alterna entre Europa e América Latina e oferece 2 ECTS (20 horas). Cooperação da ABIB, da EABS e do Observatório.",
+  "imagem_descricao_en": "Artwork of the III International Summer School Iconography of the Ancient World, with a fragment of an ancient sculpture and a feather",
+  "descricao": "Escola internacional itinerante de formação metodológica em iconografia para mestrandos, doutorandos e jovens pesquisadores em estudos do Antigo Oriente Próximo, estudos bíblicos e história das religiões. Organizada por Thomas Wagner (Bergische Universität Wuppertal) e Silas Klein Cardoso (FUV), alterna entre Europa e América Latina e oferece 2 ECTS (20 horas). A escola de verão é chancelada pela ABIB e EABS.",
+  "descricao_en": "Itinerant international summer school offering methodological training in iconography for master's and doctoral students and early-career researchers in ancient Near Eastern studies, biblical studies and the history of religions. Organised by Thomas Wagner (University of Wuppertal) and Silas Klein Cardoso (FUV), it alternates between Europe and Latin America and awards 2 ECTS (20 hours). The Summer School is endorsed by ABIB and EABS.",
   "programacao": [
     {
-      "dia": "",
       "horario": "14/09, tarde",
-      "responsavel": "Introdução à iconografia do mundo antigo, com Silas Klein",
-      "titulo": "",
-      "dia_en": "",
       "horario_en": "14 Sep, afternoon",
+      "responsavel": "Introdução à iconografia do mundo antigo, com Silas Klein",
       "responsavel_en": "Introduction to the iconography of the ancient world, with Silas Klein"
     },
     {
-      "dia": "",
       "horario": "15/09, manhã",
-      "responsavel": "Introdução à epistemologia visual, com Thomas Wagner",
-      "titulo": "",
-      "dia_en": "",
       "horario_en": "15 Sep, morning",
+      "responsavel": "Introdução à epistemologia visual, com Thomas Wagner",
       "responsavel_en": "Introduction to visual epistemology, with Thomas Wagner"
     },
     {
-      "dia": "",
       "horario": "15/09, tarde",
-      "responsavel": "Visita a exposição de museu em Vitória, com Thomas Wagner e Silas Klein",
-      "titulo": "",
-      "dia_en": "",
       "horario_en": "15 Sep, afternoon",
+      "responsavel": "Visita a exposição de museu em Vitória, com Thomas Wagner e Silas Klein",
       "responsavel_en": "Visit to a museum exhibition in Vitória, with Thomas Wagner and Silas Klein"
     },
     {
-      "dia": "",
       "horario": "16/09, manhã",
-      "responsavel": "Imagens e/m rituais, com Thomas Wagner",
-      "titulo": "",
-      "dia_en": "",
       "horario_en": "16 Sep, morning",
+      "responsavel": "Imagens e/m rituais, com Thomas Wagner",
       "responsavel_en": "Images and/in rituals, with Thomas Wagner"
     },
     {
-      "dia": "",
       "horario": "16/09, tarde",
-      "responsavel": "Visita a comunidade indígena, com Thomas Wagner e Silas Klein",
-      "titulo": "",
-      "dia_en": "",
       "horario_en": "16 Sep, afternoon",
+      "responsavel": "Visita a comunidade indígena, com Thomas Wagner e Silas Klein",
       "responsavel_en": "Visit to an Indigenous community, with Thomas Wagner and Silas Klein"
     },
     {
-      "dia": "",
       "horario": "17/09, manhã",
-      "responsavel": "Iconografia de selos cilíndricos mesopotâmicos, com Kátia Pozzer (UFRGS)",
-      "titulo": "",
-      "dia_en": "",
       "horario_en": "17 Sep, morning",
+      "responsavel": "Iconografia de selos cilíndricos mesopotâmicos, com Kátia Pozzer (UFRGS)",
       "responsavel_en": "Iconography of Mesopotamian cylinder seals, with Kátia Pozzer (UFRGS)"
     },
     {
-      "dia": "",
       "horario": "17/09, tarde",
-      "responsavel": "Iconografia e gênero no Egito antigo, com Thaís Rocha (UFMG)",
-      "titulo": "",
-      "dia_en": "",
       "horario_en": "17 Sep, afternoon",
+      "responsavel": "Iconografia e gênero no Egito antigo, com Thaís Rocha (UFMG)",
       "responsavel_en": "Iconography and gender in ancient Egypt, with Thaís Rocha (UFMG)"
     },
     {
-      "dia": "",
       "horario": "18/09, manhã",
-      "responsavel": "Comunicações de participantes",
-      "titulo": "",
-      "dia_en": "",
       "horario_en": "18 Sep, morning",
+      "responsavel": "Comunicações de participantes",
       "responsavel_en": "Participants' presentations"
     }
-  ],
-  "tipo_en": "III International Summer School",
-  "local_en": "Vitória, Brazil",
-  "imagem_descricao_en": "Artwork of the III International Summer School Iconography of the Ancient World, with a fragment of an ancient sculpture and a feather",
-  "descricao_en": "Itinerant international school offering methodological training in iconography for master's and doctoral students and early-career researchers in ancient Near Eastern studies, biblical studies and the history of religions. Organised by Thomas Wagner (University of Wuppertal) and Silas Klein Cardoso (FUV), it alternates between Europe and Latin America and awards 2 ECTS (20 hours). In cooperation with ABIB, EABS and the Observatory."
+  ]
 }
