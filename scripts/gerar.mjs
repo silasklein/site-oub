@@ -316,7 +316,9 @@ function secaoAgenda(L) {
         <div class="cel c1 dt">${dd(e.d)} ${M[e.d.getMonth()]}<small>${e.d.getFullYear()}${e.hora ? ", " + esc(e.hora) : ""}</small></div>
         <div class="cel c2-4"><h4>${esc(tr(e, "titulo", L))}</h4>${tr(e, "local", L) ? `<p>${esc(tr(e, "local", L))}</p>` : ""}${tr(e, "descricao", L) ? `<p>${esc(tr(e, "descricao", L))}</p>` : ""}</div>
       </div>`).join("\n      ");
-  const vazio = `<div class="linha agenda-vazia"${futuros.length ? " hidden" : ""}><div class="c1"></div><div class="cel c2-3 bloco vazio">
+  // Com o Google Agenda ligado, o próprio calendário mostra os eventos: o aviso de "nenhuma atividade" não aparece.
+  const temCalendario = !!idGoogleAgenda(agenda.google_calendar_id);
+  const vazio = temCalendario ? "" : `<div class="linha agenda-vazia"${futuros.length ? " hidden" : ""}><div class="c1"></div><div class="cel c2-3 bloco vazio">
         <h3>${L.vazioTitulo}</h3>
         <div><p>${L.vazioTexto}</p>
         <a class="acao" href="mailto:${esc(site.email)}?subject=${encodeURIComponent(L.vazioAssunto)}">${L.vazioAcao}</a></div></div></div>`;
@@ -411,7 +413,8 @@ const scriptPagina = L => `<script>
   for (var i = 0; i < itens.length; i++) {
     if (new Date(itens[i].getAttribute("data-dia") + "T23:59:59") < hoje) itens[i].hidden = true; else restantes++;
   }
-  if (itens.length && !restantes) document.querySelector(".agenda-vazia").hidden = false;
+  var vazio = document.querySelector(".agenda-vazia");
+  if (vazio && itens.length && !restantes) vazio.hidden = false;
 })();
 </script>`;
 
