@@ -13,6 +13,7 @@ import ICAL from "ical.js";
 import { createHash } from "node:crypto";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { execSync } from "node:child_process";
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SAIDA = join(RAIZ, "_site");
@@ -24,6 +25,7 @@ const ler = nome => JSON.parse(readFileSync(join(RAIZ, "dados", nome), "utf8"));
 const semTitulo = nome => String(nome || "").replace(/^((Prof|Profa|Dr|Dra|PD|Me|Ma)\.?\s+)+/g, "");
 const site = ler("site.json");
 const siteEn = existsSync(join(RAIZ, "dados", "site-en.json")) ? ler("site-en.json") : {};
+const ordemDe = m => (m.ordem === "" || m.ordem == null || !Number.isFinite(Number(m.ordem))) ? 999 : Number(m.ordem);
 /** Lê uma coleção do Pages CMS: uma pasta com um arquivo .json por item. */
 const lerColecao = pasta => {
   const dir = join(RAIZ, "dados", pasta);
@@ -31,7 +33,7 @@ const lerColecao = pasta => {
   return readdirSync(dir).filter(f => f.endsWith(".json")).sort().map(f => ler(join(pasta, f)));
 };
 const membros = lerColecao("membros")
-  .sort((a, b) => (Number(a.ordem) || 999) - (Number(b.ordem) || 999) || semTitulo(a.nome || "").localeCompare(semTitulo(b.nome || ""), "pt"));
+  .sort((a, b) => ordemDe(a) - ordemDe(b) || semTitulo(a.nome || "").localeCompare(semTitulo(b.nome || ""), "pt"));
 const eventos = lerColecao("eventos");
 const agenda = ler("agenda.json");
 
@@ -88,7 +90,7 @@ const IDIOMAS = {
     id: "en", lang: "en", og: "en_GB", pasta: "en/", raiz: "../",
     nome: siteEn.nome || "Observatory of Biblical Universes",
     titulo: `${siteEn.nome || "Observatory of Biblical Universes"} (OUB) | Research group at FUV`,
-    descricao: "Research group at Faculdade Unida de Vitória (Brazil) studying inscriptions, images, objects, texts and rites of the biblical universes through the study of religion.",
+    descricao: "Research group at Faculdade Unida de Vitória (Brazil) studying the inscriptions, images, objects, texts and rites of the biblical universes.",
     ogDescricao: "Research group at Faculdade Unida de Vitória (Brazil) on the study of religion and the biblical universes.",
     ogAlt: "Logo of the Observatório de Universos Bíblicos next to the words biblical universes",
     pular: "Skip to content",
@@ -177,7 +179,7 @@ function abertura(L) {
         <p class="pequeno">${esc(s.chamada)}</p>
         <p class="pequeno cinza">${L.apresentaRodape}</p>
       </div>
-      ${imgs.map((im, i) => `<figure class="faixa ${COLS[i]}" style="margin:0"><img src="${asset(L, im.imagem)}" alt="${esc(alts[i] || im.descricao)}"${i ? "" : ` fetchpriority="high"`}></figure>`).join("\n      ")}
+      ${imgs.map((im, i) => `<figure class="faixa ${COLS[i]}" style="margin:0"><img src="${esc(asset(L, im.imagem))}" alt="${esc(alts[i] || im.descricao)}"${i ? "" : ` fetchpriority="high"`}></figure>`).join("\n      ")}
       <div class="cel bloco focos-bloco">
         <p class="rotulo">${L.focosRotulo}</p>
         <ul>${(s.focos || []).map(f => `<li><a href="#${L.secoes[1]}">${esc(f.palavra_chave)}</a></li>`).join("")}</ul>
@@ -286,7 +288,7 @@ function secaoEventos(L) {
     return `<article class="linha evento">
         <p class="cel c1 ev-data"><strong>${dataEvento(e, L)}</strong>${local ? `<span class="rotulo">${esc(local)}</span>` : ""}</p>
         ${e.imagem
-          ? `<figure class="cel c2 ev-img ${e.imagem_ajuste === "inteira" ? "contain" : ""}" style="margin:0"><img src="${asset(L, e.imagem)}" alt="${esc(tr(e, "imagem_descricao", L))}" loading="lazy" width="600" height="600"></figure>`
+          ? `<figure class="cel c2 ev-img ${e.imagem_ajuste === "inteira" ? "contain" : ""}" style="margin:0"><img src="${esc(asset(L, e.imagem))}" alt="${esc(tr(e, "imagem_descricao", L))}" loading="lazy" width="600" height="600"></figure>`
           : `<div class="c2"></div>`}
         <div class="cel c3-4 ev-txt">
           <h3>${esc(e.titulo)}</h3>
@@ -331,7 +333,10 @@ const partes = (() => {
   return d => { const o = {}; for (const p of f.formatToParts(d)) o[p.type] = p.value; return { ano: +o.year, mes: +o.month, dia: +o.day, h: +o.hour, min: +o.minute, sem: dias[o.weekday] }; };
 })();
 const textoLimpo = (t, max = 280) => {
-  const s = String(t || "").replace(/<br\s*\/?>/gi, " ").replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/\s+/g, " ").trim();
+  const ent = { nbsp: " ", amp: "&", quot: '"', apos: "'", lt: "<", gt: ">" };
+  const s = String(t || "").replace(/<br\s*\/?>/gi, " ").replace(/<[^>]+>/g, "")
+    .replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (m, c) => c[0] === "#" ? String.fromCodePoint(c[1].toLowerCase() === "x" ? parseInt(c.slice(2), 16) : +c.slice(1)) : (ent[c.toLowerCase()] ?? m))
+    .replace(/\s+/g, " ").trim();
   return s.length > max ? s.slice(0, s.lastIndexOf(" ", max)).replace(/[,.;:]$/, "") + "…" : s;
 };
 
@@ -595,6 +600,8 @@ ${scriptPagina(L)}
 }
 
 // ---------------------------------------------------------------- gravação
+// Data da última alteração registrada no repositório (cai para hoje se o git não estiver disponível).
+const ULTIMA_ALTERACAO = (() => { try { return execSync("git log -1 --format=%cs", { cwd: RAIZ, stdio: ["ignore", "pipe", "ignore"] }).toString().trim() || iso(HOJE); } catch { return iso(HOJE); } })();
 rmSync(SAIDA, { recursive: true, force: true });
 mkdirSync(join(SAIDA, "en"), { recursive: true });
 cpSync(join(RAIZ, "assets"), join(SAIDA, "assets"), { recursive: true });
@@ -607,7 +614,7 @@ writeFileSync(join(SAIDA, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${["", "en/"].map(p => `  <url>
     <loc>${DOMINIO}/${p}</loc>
-    <lastmod>${iso(HOJE)}</lastmod>
+    <lastmod>${ULTIMA_ALTERACAO}</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="${DOMINIO}/"/>
     <xhtml:link rel="alternate" hreflang="en" href="${DOMINIO}/en/"/>
   </url>`).join("\n")}
