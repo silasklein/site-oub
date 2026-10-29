@@ -3,7 +3,8 @@
 # Roda sozinho quando:
 #   - alguém salva uma alteração (pelo Pages CMS ou direto no GitHub);
 #   - de hora em hora, para trazer os eventos novos do Google Agenda e tirar os que já passaram.
-# Também pode ser disparado à mão em Actions → Publicar site → Run workflow.
+# Também pode ser disparado à mão: pelo botão "Atualizar o site agora" do Pages CMS
+# ou em Actions → Publicar site → Run workflow.
 #
 # Para funcionar, em Settings → Pages, o campo "Source" deve estar em "GitHub Actions".
 
@@ -15,6 +16,12 @@ on:
   schedule:
     - cron: "17 * * * *"   # de hora em hora, aos 17 minutos
   workflow_dispatch:
+    inputs:
+      payload:
+        description: "Dados enviados pelo botão do Pages CMS (para rodar à mão, deixe como está)"
+        required: true
+        type: string
+        default: "{}"
 
 permissions:
   contents: read

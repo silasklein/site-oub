@@ -10,6 +10,15 @@ media:
   categories: [image]
   rename: safe
 
+actions:
+  - name: atualizar-site
+    label: Atualizar o site agora
+    workflow: publicar.yml
+    confirm:
+      title: Atualizar o site agora?
+      message: "O site é gerado de novo com os dados atuais e os eventos do Google Agenda. Leva cerca de 1 minuto. Alterações salvas pelo painel já atualizam o site sozinhas."
+      button: Atualizar o site
+
 content:
   # ------------------------------------------------------------------
   - name: site
@@ -326,6 +335,14 @@ content:
     type: file
     path: dados/agenda.json
     format: json
+    actions:
+      - name: atualizar-agenda
+        label: Atualizar o site agora
+        workflow: publicar.yml
+        confirm:
+          title: Atualizar o site agora?
+          message: "O site é gerado de novo e traz os eventos atuais do Google Agenda. Leva cerca de 1 minuto."
+          button: Atualizar o site
     fields:
       - name: atividades
         label: Atividades fora do Google Agenda (opcional)
