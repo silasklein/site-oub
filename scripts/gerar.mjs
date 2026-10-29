@@ -78,6 +78,7 @@ const IDIOMAS = {
     vazioTitulo: "Nenhuma atividade agendada no momento.",
     vazioTexto: "Reuniões, seminários e eventos abertos do grupo aparecem aqui assim que forem marcados.",
     vazioAcao: "Pedir a programação por e-mail", vazioAssunto: "Programação do Observatório de Universos Bíblicos",
+    rotuloLocal: "Local:", rotuloObs: "Observações:",
     assinarRotulo: "Assinar a agenda", assinarGoogle: "Adicionar ao Google Agenda", assinarIcs: "Assinar em outro aplicativo de calendário (.ics)",
     agendaFalhou: "A agenda do grupo não pôde ser atualizada agora. Ela volta a aparecer aqui na próxima atualização do site.",
     instituicao: "Instituição", diretorio: "Diretório do CNPq", verEspelho: "Ver o espelho do grupo",
@@ -114,6 +115,7 @@ const IDIOMAS = {
     vazioTitulo: "No activities scheduled at the moment.",
     vazioTexto: "Group meetings, seminars and public events appear here as soon as they are scheduled.",
     vazioAcao: "Ask for the programme by e-mail", vazioAssunto: "Programme of the Observatory of Biblical Universes",
+    rotuloLocal: "Location:", rotuloObs: "Notes:",
     assinarRotulo: "Subscribe to the calendar", assinarGoogle: "Add to Google Calendar", assinarIcs: "Subscribe in another calendar app (.ics)",
     agendaFalhou: "The group calendar could not be updated right now. It will be back here at the next site update.",
     instituicao: "Institution", diretorio: "CNPq directory", verEspelho: "View the group's CNPq page",
@@ -414,7 +416,7 @@ function linhaAgenda(e, L) {
     e.diaInteiro ? "" : (e.hora || `${hora(i, L)}–${hora(f, L)}`)].filter(Boolean).join(", ");
   return `<div class="linha proximo" data-fim="${e.termina}">
         <div class="cel c1 dt">${grande}<small>${esc(quando)}</small></div>
-        <div class="cel c2-4"><h3>${esc(e.titulo)}</h3>${e.local ? `<p>${esc(e.local)}</p>` : ""}${e.descricao ? `<p>${esc(e.descricao)}</p>` : ""}</div>
+        <div class="cel c2-4"><h3>${esc(e.titulo)}</h3>${e.local ? `<p><span class="campo">${L.rotuloLocal}</span> ${esc(e.local)}</p>` : ""}${e.descricao ? `<p><span class="campo">${L.rotuloObs}</span> ${esc(e.descricao)}</p>` : ""}</div>
       </div>`;
 }
 
