@@ -146,7 +146,7 @@ details[open] summary::after{content:"−"}
 .vazio .acao{display:inline-flex;align-items:center;min-height:44px;margin-top:8px;font-weight:600}
 .proximo .dt{font-weight:700;font-size:1.75rem;line-height:1.1;letter-spacing:-.02em}
 .proximo .dt small{display:block;font-size:.875rem;font-weight:600;letter-spacing:0;margin-top:8px}
-.proximo h4{font-weight:700;font-size:1.25rem}
+.proximo h3{font-weight:700;font-size:1.25rem}
 .proximo p{color:var(--cinza);font-size:.875rem}
 .calendario{padding:0 0 var(--p)}
 .calendario iframe{display:block;width:100%;height:620px;border:1px solid var(--fio);background:var(--branco)}
@@ -238,6 +238,20 @@ footer .fim .icones{margin-top:0}
 }
 
 /* ---------- Agenda: links para assinar a agenda do grupo ---------- */
-.assinar{display:flex;flex-wrap:wrap;gap:0 32px;padding-top:16px;padding-bottom:16px}
-.assinar a{display:inline-flex;align-items:center;min-height:44px;font-weight:600;font-size:.875rem}
+.assinar{display:flex;flex-wrap:wrap;align-items:center;gap:0 16px;padding-top:16px;padding-bottom:16px}
+.assinar .icones{margin:0}
+
+/* ---------- Seção em faixa cinza (agenda) ----------
+   Um cinza mais escuro e neutro que o da primeira coluna (#F6F6F4), para separar a seção
+   das vizinhas sem se confundir com a coluna. Os fios da grade continuam visíveis por cima. */
+:root{--faixa:#EAEAE6;--fio-faixa:#D9D9D3}
+.faixa-cinza .g{background:
+  linear-gradient(to right, transparent calc(50% - 1px), var(--fio-faixa) calc(50% - 1px), var(--fio-faixa) 50%, transparent 50%),
+  linear-gradient(to right, transparent calc(75% - 1px), var(--fio-faixa) calc(75% - 1px), var(--fio-faixa) 75%, transparent 75%),
+  linear-gradient(to right, transparent 25%, var(--fio-faixa) 25%, var(--fio-faixa) calc(25% + 1px), var(--faixa) calc(25% + 1px))}
+.faixa-cinza .linha{border-top-color:var(--fio-faixa)}
+.faixa-cinza .proximo .c2-4,.faixa-cinza .assinar{background:var(--faixa)}   /* textos longos não são cortados pelos fios */
+@media (max-width:820px){
+  .faixa-cinza .g{background:var(--faixa)}
+}
 .proximo .dt small{text-transform:none}

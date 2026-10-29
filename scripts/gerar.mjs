@@ -76,7 +76,7 @@ const IDIOMAS = {
     vazioTitulo: "Nenhuma atividade agendada no momento.",
     vazioTexto: "Reuniões, seminários e eventos abertos do grupo aparecem aqui assim que forem marcados.",
     vazioAcao: "Pedir a programação por e-mail", vazioAssunto: "Programação do Observatório de Universos Bíblicos",
-    assinarGoogle: "Adicionar a agenda do grupo ao Google Agenda", assinarIcs: "Assinar em outro aplicativo de calendário (.ics)",
+    assinarRotulo: "Assinar a agenda", assinarGoogle: "Adicionar ao Google Agenda", assinarIcs: "Assinar em outro aplicativo de calendário (.ics)",
     agendaFalhou: "A agenda do grupo não pôde ser atualizada agora. Ela volta a aparecer aqui na próxima atualização do site.",
     instituicao: "Instituição", diretorio: "Diretório do CNPq", verEspelho: "Ver o espelho do grupo",
     instagram: "Instagram do Observatório", escrever: e => `Escrever para ${e}`,
@@ -112,7 +112,7 @@ const IDIOMAS = {
     vazioTitulo: "No activities scheduled at the moment.",
     vazioTexto: "Group meetings, seminars and public events appear here as soon as they are scheduled.",
     vazioAcao: "Ask for the programme by e-mail", vazioAssunto: "Programme of the Observatory of Biblical Universes",
-    assinarGoogle: "Add the group calendar to Google Calendar", assinarIcs: "Subscribe in another calendar app (.ics)",
+    assinarRotulo: "Subscribe to the calendar", assinarGoogle: "Add to Google Calendar", assinarIcs: "Subscribe in another calendar app (.ics)",
     agendaFalhou: "The group calendar could not be updated right now. It will be back here at the next site update.",
     instituicao: "Institution", diretorio: "CNPq directory", verEspelho: "View the group's CNPq page",
     instagram: "The Observatory on Instagram", escrever: e => `Write to ${e}`,
@@ -123,7 +123,7 @@ const IDIOMAS = {
 };
 
 // ---------------------------------------------------------------- ícones
-const ICONES = ["lattes", "orcid", "linkedin", "instagram", "email"];
+const ICONES = ["lattes", "orcid", "linkedin", "instagram", "email", "googlecalendar", "calendario"];
 const sprite = `<svg xmlns="http://www.w3.org/2000/svg" style="display:none">${ICONES.map(n => {
   const svg = readFileSync(join(RAIZ, "assets", "icones", `${n}.svg`), "utf8");
   const viewBox = svg.match(/viewBox="([^"]+)"/)[1];
@@ -409,7 +409,7 @@ function linhaAgenda(e, L) {
     e.diaInteiro ? "" : (e.hora || `${hora(i, L)}–${hora(f, L)}`)].filter(Boolean).join(", ");
   return `<div class="linha proximo" data-fim="${e.termina}">
         <div class="cel c1 dt">${grande}<small>${esc(quando)}</small></div>
-        <div class="cel c2-4"><h4>${esc(e.titulo)}</h4>${e.local ? `<p>${esc(e.local)}</p>` : ""}${e.descricao ? `<p>${esc(e.descricao)}</p>` : ""}</div>
+        <div class="cel c2-4"><h3>${esc(e.titulo)}</h3>${e.local ? `<p>${esc(e.local)}</p>` : ""}${e.descricao ? `<p>${esc(e.descricao)}</p>` : ""}</div>
       </div>`;
 }
 
@@ -427,15 +427,15 @@ function secaoAgenda(L) {
   // esconde o que já passou entre uma atualização e outra.
   const itens = lista.map(e => linhaAgenda(e, L)).join("\n      ");
   const assinar = idAgendaGoogle ? `<div class="linha"><div class="c1"></div><div class="cel c2-4 assinar">
-        <a href="https://calendar.google.com/calendar/u/0?cid=${encodeURIComponent(Buffer.from(idAgendaGoogle).toString("base64").replace(/=+$/, ""))}" target="_blank" rel="noopener">${L.assinarGoogle}<span class="sr-only">${L.novaAba}</span></a>
-        <a href="https://calendar.google.com/calendar/ical/${encodeURIComponent(idAgendaGoogle)}/public/basic.ics">${L.assinarIcs}</a>
+        <span class="rotulo cinza">${L.assinarRotulo}</span>
+        <div class="icones">${linkIcone(`https://calendar.google.com/calendar/u/0?cid=${encodeURIComponent(Buffer.from(idAgendaGoogle).toString("base64").replace(/=+$/, ""))}`, "googlecalendar", L.assinarGoogle, L)}${linkIcone(`https://calendar.google.com/calendar/ical/${encodeURIComponent(idAgendaGoogle)}/public/basic.ics`, "calendario", L.assinarIcs, L, false)}</div>
       </div></div>` : "";
   const texto = eventosGoogle === null ? L.agendaFalhou : L.vazioTexto;
   const vazio = `<div class="linha agenda-vazia"${lista.length ? " hidden" : ""}><div class="c1"></div><div class="cel c2-3 bloco vazio">
         <h3>${L.vazioTitulo}</h3>
         <div><p>${texto}</p>
         <a class="acao" href="mailto:${esc(site.email)}?subject=${encodeURIComponent(L.vazioAssunto)}">${L.vazioAcao}</a></div></div></div>`;
-  return `<section id="${id}" aria-labelledby="t-${id}">
+  return `<section id="${id}" class="faixa-cinza" aria-labelledby="t-${id}">
     <div class="g">
       ${cabecalhoSecao("05", id, id)}
       ${itens}
