@@ -605,7 +605,10 @@ const ULTIMA_ALTERACAO = (() => { try { return execSync("git log -1 --format=%cs
 rmSync(SAIDA, { recursive: true, force: true });
 mkdirSync(join(SAIDA, "en"), { recursive: true });
 cpSync(join(RAIZ, "assets"), join(SAIDA, "assets"), { recursive: true });
-for (const arquivo of ["404.html", "robots.txt", "CNAME"]) {
+// Arquivos fixos da raiz, mais os de verificação de buscadores (Google Search Console,
+// Bing, Yandex): basta enviá-los para a raiz do repositório que eles vão para o site.
+const VERIFICACAO = /^(google[0-9a-z]+\.html|BingSiteAuth\.xml|yandex_[0-9a-z]+\.html)$/i;
+for (const arquivo of ["404.html", "robots.txt", "CNAME", ...readdirSync(RAIZ).filter(f => VERIFICACAO.test(f))]) {
   if (existsSync(join(RAIZ, arquivo))) cpSync(join(RAIZ, arquivo), join(SAIDA, arquivo));
 }
 writeFileSync(join(SAIDA, "index.html"), pagina(IDIOMAS.pt));
