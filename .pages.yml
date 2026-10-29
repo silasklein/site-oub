@@ -1,0 +1,359 @@
+# Configuração do Pages CMS (https://pagescms.org)
+# Define as telas de edição do site do Observatório de Universos Bíblicos.
+# Cada item de "content" edita um arquivo da pasta dados/.
+# Campos terminados em "(inglês)" alimentam a versão em inglês do site (universosbiblicos.org/en/).
+# Quando ficam vazios, a versão em inglês mostra o texto em português.
+
+media:
+  input: assets/imagens
+  output: assets/imagens
+  categories: [image]
+  rename: safe
+
+content:
+  # ------------------------------------------------------------------
+  - name: site
+    label: Textos do site (português)
+    type: file
+    path: dados/site.json
+    format: json
+    fields:
+      - name: titulo_abertura
+        label: Título da abertura
+        type: string
+        required: true
+        description: "As palavras grandes do topo da página. Aparecem em letras minúsculas."
+      - name: chamada
+        label: Apresentação curta
+        type: text
+        description: "Texto pequeno na primeira coluna da abertura."
+      - name: imagens_abertura
+        label: Imagens da abertura
+        type: object
+        description: "Exatamente duas imagens, lado a lado, logo abaixo do título."
+        list:
+          min: 2
+          max: 2
+          collapsible:
+            collapsed: true
+            summary: "Imagem {index}"
+        fields:
+          - name: imagem
+            label: Imagem
+            type: image
+          - name: descricao
+            label: Descrição da imagem
+            type: string
+            description: "Para leitores de tela e buscadores. Diga o que aparece na imagem."
+      - name: sobre_destaque
+        label: "Sobre: parágrafo de destaque"
+        type: text
+      - name: sobre_paragrafos
+        label: "Sobre: demais parágrafos"
+        type: text
+        list: true
+      - name: areas
+        label: Áreas em diálogo
+        type: string
+        list: true
+      - name: focos
+        label: Focos de pesquisa
+        type: object
+        description: "Até três focos. Cada um ocupa uma coluna da grade."
+        list:
+          max: 3
+          collapsible:
+            collapsed: true
+            summary: "{palavra_chave}"
+        fields:
+          - name: palavra_chave
+            label: Palavra-chave
+            type: string
+            required: true
+          - name: titulo
+            label: Título
+            type: string
+          - name: texto
+            label: Texto
+            type: text
+      - name: email
+        label: E-mail de contato
+        type: string
+        required: true
+      - name: instituicao
+        label: Instituição
+        type: string
+      - name: link_cnpq
+        label: Link do espelho do grupo no CNPq
+        type: string
+      - name: instagram
+        label: Link do Instagram do grupo
+        type: string
+        description: "Endereço completo, como https://www.instagram.com/universos.biblicos. Deixe vazio para esconder o ícone."
+
+  # ------------------------------------------------------------------
+  - name: site_en
+    label: Textos do site (inglês)
+    type: file
+    path: dados/site-en.json
+    format: json
+    fields:
+      - name: nome
+        label: Nome do grupo em inglês
+        type: string
+        description: "Usado no título da aba e nas buscas em inglês. O nome oficial em português continua aparecendo no logo."
+      - name: titulo_abertura
+        label: Título da abertura
+        type: string
+      - name: chamada
+        label: Apresentação curta
+        type: text
+      - name: descricoes_imagens
+        label: Descrições das imagens da abertura
+        type: string
+        list:
+          max: 2
+        description: "Na mesma ordem das imagens da versão em português."
+      - name: sobre_destaque
+        label: "Sobre: parágrafo de destaque"
+        type: text
+      - name: sobre_paragrafos
+        label: "Sobre: demais parágrafos"
+        type: text
+        list: true
+      - name: areas
+        label: Áreas em diálogo
+        type: string
+        list: true
+      - name: focos
+        label: Focos de pesquisa
+        type: object
+        description: "Na mesma ordem dos focos da versão em português."
+        list:
+          max: 3
+          collapsible:
+            collapsed: true
+            summary: "{palavra_chave}"
+        fields:
+          - name: palavra_chave
+            label: Palavra-chave
+            type: string
+          - name: titulo
+            label: Título
+            type: string
+          - name: texto
+            label: Texto
+            type: text
+      - name: instituicao
+        label: Instituição
+        type: string
+
+  # ------------------------------------------------------------------
+  - name: membros
+    label: Membros
+    type: file
+    path: dados/membros.json
+    format: json
+    list:
+      collapsible:
+        collapsed: true
+        summary: "{nome}"
+    fields:
+      - name: nome
+        label: Nome
+        type: string
+        required: true
+        description: "Com o título, como deve aparecer no site (ex.: Prof. Dr. Fulano de Tal)."
+      - name: funcao
+        label: Grupo
+        type: select
+        required: true
+        options:
+          values:
+            - name: Líder
+              label: Liderança
+            - name: Pesquisador(a)
+              label: Pesquisadores doutores
+            - name: Estudante
+              label: Estudantes
+            - name: Colaborador(a)
+              label: Colaboradores estrangeiros
+      - name: vinculo
+        label: Vínculo
+        type: string
+        description: "Instituição ou, para estudantes, o nível (Mestrando, Doutoranda…)."
+      - name: vinculo_en
+        label: Vínculo (inglês)
+        type: string
+        description: "Opcional. Se ficar vazio, a versão em inglês usa o texto em português. Ex.: PhD candidate, Master's student."
+      - name: lattes
+        label: Link do Lattes
+        type: string
+        description: "O endereço que aparece no topo do currículo, como http://lattes.cnpq.br/0000000000000000. Aparece como ícone."
+      - name: orcid
+        label: Link do ORCID
+        type: string
+        description: "Endereço completo, como https://orcid.org/0000-0000-0000-0000. Aparece como ícone."
+      - name: linkedin
+        label: Link do LinkedIn
+        type: string
+        description: "Endereço completo, como https://www.linkedin.com/in/nome. Aparece como ícone."
+      - name: email
+        label: E-mail
+        type: string
+        description: "Opcional. Aparece como ícone de envelope."
+
+  # ------------------------------------------------------------------
+  - name: eventos
+    label: Eventos
+    type: file
+    path: dados/eventos.json
+    format: json
+    list:
+      collapsible:
+        collapsed: true
+        summary: "{titulo}"
+    fields:
+      - name: titulo
+        label: Título
+        type: string
+        required: true
+      - name: tipo
+        label: Tipo de evento
+        type: string
+        description: "Ex.: Simpósio internacional, Escola de verão, Colóquio."
+      - name: tipo_en
+        label: Tipo de evento (inglês)
+        type: string
+        description: "Opcional. Se ficar vazio, a versão em inglês usa o texto em português."
+      - name: data_inicio
+        label: Data de início
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: data_fim
+        label: Data de término
+        type: date
+        default: ""
+        description: "Deixe vazio para eventos de um dia só."
+        options:
+          format: yyyy-MM-dd
+      - name: local
+        label: Local
+        type: string
+      - name: local_en
+        label: Local (inglês)
+        type: string
+        description: "Opcional. Se ficar vazio, a versão em inglês usa o texto em português."
+      - name: imagem
+        label: Imagem (cartaz ou arte)
+        type: image
+      - name: imagem_ajuste
+        label: Como mostrar a imagem
+        type: select
+        default: preencher
+        options:
+          values:
+            - name: preencher
+              label: Preencher o quadrado (pode cortar as bordas)
+            - name: inteira
+              label: Mostrar a imagem inteira
+      - name: imagem_descricao
+        label: Descrição da imagem
+        type: string
+      - name: imagem_descricao_en
+        label: Descrição da imagem (inglês)
+        type: string
+        description: "Opcional. Se ficar vazio, a versão em inglês usa o texto em português."
+      - name: descricao
+        label: Descrição do evento
+        type: text
+      - name: descricao_en
+        label: Descrição do evento (inglês)
+        type: text
+        description: "Opcional. Se ficar vazio, a versão em inglês usa o texto em português."
+      - name: programacao
+        label: Programação
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{horario} {responsavel}"
+        fields:
+          - name: dia
+            label: Novo dia
+            type: string
+            description: "Preencha só no primeiro item de cada dia (ex.: 8 de junho). Deixe vazio nos demais."
+          - name: dia_en
+            label: Novo dia (inglês)
+            type: string
+            description: "Ex.: 8 June."
+          - name: horario
+            label: Horário
+            type: string
+          - name: horario_en
+            label: Horário (inglês)
+            type: string
+            description: "Só se o horário tiver palavras (ex.: Monday afternoon)."
+          - name: responsavel
+            label: Atividade ou pessoa
+            type: string
+          - name: responsavel_en
+            label: Atividade ou pessoa (inglês)
+            type: string
+            description: "Opcional. Se ficar vazio, a versão em inglês usa o texto em português."
+          - name: titulo
+            label: Título da fala
+            type: string
+            description: "Opcional. Aparece em itálico."
+
+  # ------------------------------------------------------------------
+  - name: agenda
+    label: Agenda
+    type: file
+    path: dados/agenda.json
+    format: json
+    fields:
+      - name: atividades
+        label: Próximas atividades
+        type: object
+        description: "Atividades com data passada somem do site sozinhas (o site é atualizado todos os dias de madrugada)."
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{data} {titulo}"
+        fields:
+          - name: data
+            label: Data
+            type: date
+            required: true
+            options:
+              format: yyyy-MM-dd
+          - name: hora
+            label: Horário
+            type: string
+          - name: titulo
+            label: Título
+            type: string
+            required: true
+          - name: titulo_en
+            label: Título (inglês)
+            type: string
+            description: "Opcional. Se ficar vazio, a versão em inglês usa o texto em português."
+          - name: local
+            label: Local
+            type: string
+          - name: local_en
+            label: Local (inglês)
+            type: string
+          - name: descricao
+            label: Descrição
+            type: text
+          - name: descricao_en
+            label: Descrição (inglês)
+            type: text
+      - name: google_calendar_id
+        label: ID do Google Agenda (opcional)
+        type: string
+        description: "Se preenchido, o calendário do grupo aparece embaixo da lista. Fica em Configurações da agenda, em Integrar agenda."

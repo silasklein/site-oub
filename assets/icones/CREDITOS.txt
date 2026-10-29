@@ -1,0 +1,14 @@
+Ícones usados no site
+
+lattes.svg
+  Vetorizado a partir do logo da Plataforma Lattes (CNPq) enviado pelo grupo.
+  A marca pertence ao CNPq e aparece aqui só para indicar links para currículos Lattes.
+
+orcid.svg, linkedin.svg, instagram.svg
+  Simple Icons 13.21.0 (https://simpleicons.org), licença CC0 1.0.
+  As marcas ORCID, LinkedIn e Instagram pertencem a seus donos e aparecem
+  aqui só para indicar links para perfis nessas plataformas.
+
+email.svg
+  Tabler Icons 3.31.0 (https://tabler.io/icons), licença MIT,
+  Copyright (c) 2020-2024 Paweł Kuna.

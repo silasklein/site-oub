@@ -1,0 +1,237 @@
+/* Estilo do site do Observatório de Universos Bíblicos. Compartilhado pelas versões em português e inglês. */
+@font-face{font-family:"Jost";font-style:normal;font-display:swap;font-weight:100 900;src:url(fonts/jost-latin-wght-normal.woff2) format("woff2")}
+@font-face{font-family:"Jost";font-style:italic;font-display:swap;font-weight:100 900;src:url(fonts/jost-latin-wght-italic.woff2) format("woff2")}
+
+:root{
+  --branco:#FFFFFF;
+  --coluna:#F6F6F4;     /* tom da primeira coluna */
+  --preto:#1D1D1B;      /* preto do logo */
+  --laranja:#EA5B0C;    /* laranja do logo: blocos de cor e grafismos */
+  --cinza:#5F5F5B;      /* texto secundário */
+  --fio:#E4E4E0;        /* fios da grade */
+  --p:32px;             /* respiro interno das células */
+  --max:1360px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;position:relative;min-height:100vh;background:var(--branco);color:var(--preto);font:400 1rem/1.6 "Jost",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.2em}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--preto);outline-offset:2px}
+h1,h2,h3,h4,p{margin:0}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.pular{position:absolute;left:16px;top:-80px;z-index:50;background:var(--preto);color:var(--branco);padding:12px 16px;font-weight:600;text-decoration:none}
+.pular:focus{top:16px}
+ul{list-style:none;margin:0;padding:0}
+
+/* ---------- Grade de 4 colunas, sem calhas, com fios aparentes ---------- */
+.g{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.guias{position:absolute;inset:0;z-index:0;pointer-events:none}
+.guias .g{height:100%}
+.guias span{border-left:1px solid var(--fio)}
+.guias span:first-child{background:var(--coluna)}
+.guias span:last-child{border-right:1px solid var(--fio)}
+.camada{position:relative;z-index:1}
+.cel{padding:var(--p)}
+.c1{grid-column:1}
+.c2{grid-column:2}
+.c3{grid-column:3}
+.c4{grid-column:4}
+.c2-4{grid-column:2 / span 3}
+.c2-3{grid-column:2 / span 2}
+.c3-4{grid-column:3 / span 2}
+.bloco{background:var(--laranja);color:var(--preto)}
+/* texto que atravessa mais de uma coluna recebe fundo branco, para os fios não cortarem as linhas */
+.sobre .texto,.ev-txt,.nota,footer p{background:var(--branco)}
+
+/* ---------- Tipos ---------- */
+.gigante{font-weight:700;text-transform:lowercase;font-size:clamp(3.25rem,10.2vw,9.5rem);line-height:.88;letter-spacing:-.045em}
+.titulo{font-weight:700;text-transform:lowercase;font-size:clamp(2.75rem,7.6vw,7rem);line-height:1.1;letter-spacing:-.04em}
+.lead{font-weight:400;font-size:clamp(1.25rem,1.8vw,1.5rem);line-height:1.35;letter-spacing:-.01em}
+.pequeno{font-size:.875rem;line-height:1.55}
+.rotulo{font-weight:600;font-size:.875rem;line-height:1.3}
+.num{font-weight:600;font-size:.875rem}
+.cinza{color:var(--cinza)}
+
+/* ---------- Cabeçalho ---------- */
+.topo{position:sticky;top:0;z-index:20;background:var(--branco);border-bottom:1px solid var(--fio)}
+.topo .g{height:72px;align-items:center}
+.marca{grid-column:1;padding:0 var(--p);display:flex;align-items:center;gap:12px;text-decoration:none;height:100%;background:var(--coluna);border-left:1px solid var(--fio)}
+.marca img{width:38px}
+.marca span{font-weight:600;font-size:.875rem;letter-spacing:.32em}
+nav{padding:0}
+nav ul{display:flex;gap:32px}
+nav a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px;text-decoration:none;font-weight:600;font-size:1rem}
+nav a:hover{text-decoration:underline}
+.menu-btn{display:none;width:44px;height:44px;background:none;border:0;cursor:pointer;padding:0 8px;flex-direction:column;justify-content:center;gap:8px}
+.menu-btn i{display:block;height:2px;background:var(--preto)}
+.menu-btn i:nth-child(2){width:65%;margin-left:auto}
+
+/* ---------- Abertura ---------- */
+.abertura .logo-cel{grid-column:1;grid-row:1;display:flex;flex-direction:column;justify-content:space-between;gap:48px;padding-top:56px}
+.abertura .logo-cel img{width:100%;max-width:230px}
+.abertura h1{grid-column:2 / span 3;grid-row:1;align-self:end;padding:120px var(--p) 56px}
+.faixa{grid-row:2;height:clamp(300px,36vw,460px)}
+.faixa img{width:100%;height:100%;object-fit:cover}
+.faixa.c3 img{object-position:center 40%}
+.apresenta{grid-column:1;grid-row:2;display:flex;flex-direction:column;justify-content:space-between}
+.apresenta p{max-width:22em}
+.focos-bloco{grid-column:4;grid-row:2;display:flex;flex-direction:column;justify-content:space-between}
+.focos-bloco ul{font-weight:600;font-size:1.125rem;line-height:1.35}
+.focos-bloco a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none}
+.focos-bloco a:hover{text-decoration:underline}
+
+/* ---------- Seções ---------- */
+section{border-top:1px solid var(--fio)}
+.cab{grid-column:1 / -1;display:grid;grid-template-columns:subgrid}
+.cab .meta{grid-column:1;padding-top:calc(var(--p) + 12px)}
+.cab .meta p{margin-top:8px;max-width:16em}
+.cab h2{grid-column:2 / span 3;padding:88px var(--p) 56px}
+.linha{grid-column:1 / -1;display:grid;grid-template-columns:subgrid;border-top:1px solid var(--fio)}
+
+/* Sobre */
+.sobre .texto p+p{margin-top:1em}
+.sobre .texto .lead{margin-bottom:28px}
+.sobre .texto{padding-bottom:88px}
+.sobre .texto p{max-width:70ch}
+.sobre .areas li{font-weight:400;line-height:1.6}
+.sobre .lideranca h3{margin-bottom:8px}
+.sobre .lideranca li{font-weight:600;line-height:1.5}
+
+/* Focos */
+.foco{padding-bottom:72px}
+.foco h3{font-weight:700;font-size:clamp(1.5rem,2.2vw,2rem);line-height:1.1;letter-spacing:-.02em;margin-bottom:12px}
+.foco h4{font-weight:400;font-size:1rem;line-height:1.4;margin-bottom:16px}
+.foco p{color:var(--cinza);font-size:1rem}
+.foco + .foco{border-left:0}
+
+/* Membros */
+.pessoa h4{font-weight:700;font-size:1.25rem;line-height:1.2;letter-spacing:-.01em}
+.pessoa .vinc{margin-top:4px}
+.pessoa .bio{margin-top:12px;color:var(--cinza);font-size:1rem}
+.pessoa .links{display:flex;flex-wrap:wrap;gap:0 16px;margin-top:4px;font-weight:600;font-size:.875rem}
+.pessoa .links a,.contato-dados dd a{display:inline-flex;align-items:center;min-height:44px}
+.pessoa{padding-bottom:48px}
+.nota{padding-bottom:72px}
+.nota{max-width:none}
+.nota span{display:block;max-width:70ch}
+
+/* Eventos */
+.ev-data strong{display:block;font-weight:700;font-size:clamp(2rem,3.4vw,3rem);line-height:1.1;letter-spacing:-.035em}
+.ev-data span{display:block;margin-top:8px}
+.ev-img{padding:0;background:#EFEFEF;aspect-ratio:1/1;overflow:hidden}
+.ev-img img{width:100%;height:100%;object-fit:cover}
+.ev-img.contain img{object-fit:contain}
+.ev-txt h3{font-weight:700;font-size:clamp(1.5rem,2.4vw,2.25rem);line-height:1.1;letter-spacing:-.025em}
+.ev-txt .tipo{font-weight:600;margin:12px 0 16px}
+.ev-txt > p:not(.tipo){color:var(--cinza);max-width:70ch}
+details{margin-top:28px;border-top:1px solid var(--preto)}
+summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;min-height:48px;padding:12px 0;font-weight:600}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:1.6rem;font-weight:400;line-height:1}
+details[open] summary::after{content:"−"}
+.prog li{display:grid;grid-template-columns:120px 1fr;gap:16px;padding:12px 0;border-top:1px solid var(--fio);font-size:.875rem;line-height:1.5}
+.prog .h{font-weight:600;color:var(--cinza)}
+.prog .dia{display:block;font-weight:700;font-size:1rem;padding:16px 0 8px;border-top:1px solid var(--preto)}
+.prog i{color:var(--cinza)}
+.evento{padding-bottom:0}
+
+/* Agenda */
+.vazio{display:flex;flex-direction:column;justify-content:space-between;gap:40px;min-height:220px}
+.vazio h3{font-weight:700;font-size:clamp(1.5rem,2.4vw,2rem);line-height:1.1;letter-spacing:-.02em;max-width:14em}
+.vazio p{max-width:30em}
+.vazio .acao{display:inline-flex;align-items:center;min-height:44px;margin-top:8px;font-weight:600}
+.proximo .dt{font-weight:700;font-size:1.75rem;line-height:1.1;letter-spacing:-.02em}
+.proximo .dt small{display:block;font-size:.875rem;font-weight:600;letter-spacing:0;margin-top:8px}
+.proximo h4{font-weight:700;font-size:1.25rem}
+.proximo p{color:var(--cinza);font-size:.875rem}
+.calendario{padding:0 0 var(--p)}
+.calendario iframe{display:block;width:100%;height:620px;border:1px solid var(--fio);background:var(--branco)}
+.agenda-fim{height:72px}
+
+/* Contato */
+.email{display:block;font-weight:700;font-size:clamp(1.75rem,5.6vw,5.25rem);line-height:1.1;letter-spacing:-.04em;text-decoration:none;word-break:break-word;padding-bottom:var(--p)}
+.email:hover{text-decoration:underline;text-decoration-thickness:3px}
+.contato-dados dt{font-weight:600;font-size:.875rem;color:var(--cinza)}
+.contato-dados dd{margin:4px 0 0}
+
+footer{border-top:1px solid var(--fio)}
+footer .logo-rod img{width:100%;max-width:170px}
+footer p{max-width:34em}
+footer .voltar{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;font-weight:600}
+footer .voltar:hover{text-decoration:underline}
+
+/* ---------- Tablet ---------- */
+@media (max-width:1100px){
+  :root{--p:24px}
+  nav ul{gap:22px}
+  .marca span{letter-spacing:.2em}
+}
+/* ---------- Celular: 2 colunas ---------- */
+@media (max-width:820px){
+  :root{--p:16px}
+  .g{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .guias .g{grid-template-columns:1fr}
+  .guias span:nth-child(n+2){display:none}
+  .guias span:first-child{background:none;border-right:1px solid var(--fio)}
+  .c1,.c2,.c3,.c4,.c2-4,.c2-3,.c3-4{grid-column:1 / -1}
+  .marca{grid-column:1;background:none;border:0}
+  .menu-btn{display:flex}
+  nav{position:absolute;top:72px;left:0;right:0;background:var(--branco);border-bottom:1px solid var(--preto);display:none;padding:8px var(--p) 20px;justify-self:stretch}
+  nav.aberto{display:block}
+  nav ul{flex-direction:column;gap:0}
+  nav a{display:block;padding:12px 0;font-size:1.375rem;font-weight:600}
+  .abertura .logo-cel{grid-column:1 / -1;grid-row:auto;padding-top:36px;gap:0}
+  .abertura .logo-cel img{max-width:180px}
+  .abertura h1{grid-column:1 / -1;grid-row:auto;padding:56px var(--p) 36px}
+  .faixa{grid-row:auto;height:auto;aspect-ratio:3/4}
+  .faixa.c2{grid-column:1}
+  .faixa.c3{grid-column:2}
+  .apresenta,.focos-bloco{grid-column:1 / -1;grid-row:auto}
+  .focos-bloco{gap:28px}
+  .apresenta{padding-bottom:40px}
+  .cab .meta{grid-column:1 / -1;padding-top:var(--p)}
+  .cab h2{grid-column:1 / -1;padding:24px var(--p) 36px}
+  .sobre .texto{padding-bottom:40px}
+  .foco{padding-bottom:40px;border-top:1px solid var(--fio)}
+  .ev-img{aspect-ratio:4/3}
+  .prog li{grid-template-columns:1fr;gap:4px}
+  footer .voltar{padding-top:0}
+  .gigante{font-size:16.5vw}
+  .titulo{font-size:14.5vw}
+  .sobre .areas{order:3}
+  .sobre .lideranca{order:4}
+}
+/* Aviso quando os dados não carregam (ex.: arquivo aberto direto do computador) */
+.aviso{grid-column:2 / span 3;margin:var(--p);padding:var(--p);background:var(--laranja)}
+.aviso p+p{margin-top:8px}
+.aviso button{min-height:44px;margin-top:16px;padding:0 16px;background:var(--preto);color:var(--branco);border:0;font:600 1rem "Jost",system-ui,sans-serif;cursor:pointer}
+@media (max-width:820px){.aviso{grid-column:1 / -1}}
+
+/* ---------- Cabeçalho: ações (menu, idioma) ---------- */
+.acoes{grid-column:2 / span 3;display:flex;align-items:center;justify-content:flex-end;gap:8px;height:100%;padding-right:var(--p)}
+.acoes nav{padding:0}
+.idioma{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;margin-left:16px;border:1px solid var(--preto);font-weight:600;font-size:.875rem;letter-spacing:.08em;text-decoration:none}
+.idioma:hover{background:var(--preto);color:var(--branco)}
+
+/* ---------- Ícones (Lattes, ORCID, LinkedIn, Instagram, e-mail) ----------
+   Cada ícone de 20px fica numa área de toque de 44px. A margem negativa de 12px
+   ((44 - 20) / 2) alinha opticamente o primeiro ícone à margem do texto acima. */
+.icones{display:flex;flex-wrap:wrap;align-items:center;margin:4px 0 0 -12px}
+.icones a{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;color:var(--preto);text-decoration:none}
+.icones a:hover{color:var(--laranja)}
+.icones svg{width:20px;height:20px;fill:currentColor}
+.icones.grandes svg{width:28px;height:28px}
+.icones.grandes a{min-width:48px;min-height:48px}
+.contato-icones{padding-top:0}
+footer .fim{display:flex;flex-direction:column;justify-content:space-between;gap:16px}
+footer .fim .icones{margin-top:0}
+
+@media (max-width:820px){
+  .acoes{grid-column:2;gap:4px}
+  .acoes nav{padding:8px var(--p) 20px}
+  .idioma{margin-left:0}
+  .menu-btn{margin-right:0}
+}

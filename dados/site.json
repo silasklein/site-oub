@@ -1,0 +1,49 @@
+{
+  "titulo_abertura": "universos bíblicos",
+  "chamada": "Inscrições, imagens, objetos, literaturas e ritos das religiões dos contextos em que os textos bíblicos foram gestados, estudados com os instrumentos das ciências das religiões.",
+  "imagens_abertura": [
+    {
+      "imagem": "assets/imagens/mosaico-zodiaco.jpg",
+      "descricao": "Detalhe de mosaico antigo com figura solar coroada de raios, do cartaz do simpósio sobre o zodíaco"
+    },
+    {
+      "imagem": "assets/imagens/fragmento-escultura.jpg",
+      "descricao": "Fragmento de rosto esculpido em pedra amarela, ao lado de uma pena verde e amarela, da arte da Summer School de iconografia"
+    }
+  ],
+  "sobre_destaque": "O grupo de pesquisa Observatório de Universos Bíblicos (OUB) investiga fenômenos, práticas e produções religiosas dos contextos histórico-culturais nos quais textos bíblicos foram gestados, produzidos e primariamente recebidos a partir do prisma e instrumentais das ciências das religiões.",
+  "sobre_paragrafos": [
+    "Tradicionalmente atrelado à exegese e teologia cristãs, o estudo de tradições bíblicas tem experimentado uma polinização conceitual e metodológica cada vez mais frequente com outras áreas do saber. Contudo, enquanto a nova configuração dissolveu antigas fronteiras disciplinares e reinscreveu corpos de evidências outrora negligenciados, ela carece articulação conceitual para sanar a decorrente desestabilização epistemológica.",
+    "Em vista do panorama, o grupo articula pesquisas que examinam inscrições, imagens, objetos, literaturas e ritos de religiões dos universos bíblicos a partir de questionamentos, instrumentais e quadros conceituais da antropologia, arqueologia, hermenêutica, filosofia, história, literatura e sociologia das religiões."
+  ],
+  "areas": [
+    "Antropologia",
+    "Arqueologia",
+    "Hermenêutica",
+    "Filosofia",
+    "História",
+    "Literatura",
+    "Sociologia das religiões"
+  ],
+  "focos": [
+    {
+      "palavra_chave": "Artefatos",
+      "titulo": "Mediações materiais e visuais das religiões bíblicas",
+      "texto": "Investigação de como artefatos dos contextos nos quais textos bíblicos foram gestados, produzidos e primariamente recebidos mediavam ideias e práticas religiosas no sul do Levante antigo. Articulação de pesquisas que examinam inscrições, imagens e objetos dos universos bíblicos via questionamentos, instrumentais e quadros conceituais da antropologia, arqueologia, hermenêutica, filosofia, história e literatura das religiões."
+    },
+    {
+      "palavra_chave": "Textos (para)bíblicos",
+      "titulo": "Mediações sociais e literárias das religiões bíblicas",
+      "texto": "Investigação de como textos (para)bíblicos dos contextos nos quais textos bíblicos foram gestados, produzidos e primariamente recebidos mediavam ideias e práticas religiosas. Articulação de pesquisas que examinam inscrições, literaturas e ritos dos universos bíblicos via questionamentos, instrumentais e quadros conceituais da antropologia, hermenêutica, filosofia, história, literatura e sociologia das religiões."
+    },
+    {
+      "palavra_chave": "Pesquisadores(as)",
+      "titulo": "Mediações sócio-epistêmicas das religiões bíblicas",
+      "texto": "Investigação de como pesquisadores(as) dos contextos nos quais textos bíblicos foram gestados, produzidos e primariamente recebidos mediam o conceito de religião. Articulação de pesquisas que examinam a estética da recepção, história da interpretação e da pesquisa dos universos bíblicos a partir de questionamentos, instrumentais e quadros conceituais da antropologia, hermenêutica, história, literatura e sociologia das religiões."
+    }
+  ],
+  "email": "observatorio@fuv.edu.br",
+  "instituicao": "Faculdade Unida de Vitória (FUV), Vitória/ES",
+  "link_cnpq": "http://dgp.cnpq.br/dgp/espelhogrupo/0734758733059689",
+  "instagram": "https://www.instagram.com/universos.biblicos"
+}
