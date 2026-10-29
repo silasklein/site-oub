@@ -1,0 +1,12 @@
+{
+  "name": "site-oub",
+  "private": true,
+  "type": "module",
+  "description": "Gerador do site do Observatório de Universos Bíblicos",
+  "scripts": {
+    "gerar": "node scripts/gerar.mjs"
+  },
+  "dependencies": {
+    "ical.js": "2.1.0"
+  }
+}

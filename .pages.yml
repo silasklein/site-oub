@@ -151,13 +151,17 @@ content:
   # ------------------------------------------------------------------
   - name: membros
     label: Membros
-    type: file
-    path: dados/membros.json
+    type: collection
+    path: dados/membros
     format: json
-    list:
-      collapsible:
-        collapsed: true
-        summary: "{nome}"
+    filename: "{fields.nome}.json"
+    view:
+      fields: [nome, funcao, ordem]
+      primary: nome
+      sort: [ordem, nome]
+      default:
+        sort: ordem
+        order: asc
     fields:
       - name: nome
         label: Nome
@@ -178,6 +182,10 @@ content:
               label: Estudantes
             - name: Colaborador(a)
               label: Colaboradores estrangeiros
+      - name: ordem
+        label: Ordem
+        type: number
+        description: "Posição dentro do grupo no site: números menores aparecem primeiro (ex.: 10, 20, 30). Deixe espaço entre os números para encaixar pessoas novas."
       - name: vinculo
         label: Vínculo
         type: string
@@ -206,13 +214,17 @@ content:
   # ------------------------------------------------------------------
   - name: eventos
     label: Eventos
-    type: file
-    path: dados/eventos.json
+    type: collection
+    path: dados/eventos
     format: json
-    list:
-      collapsible:
-        collapsed: true
-        summary: "{titulo}"
+    filename: "{fields.data_inicio}-{fields.titulo}.json"
+    view:
+      fields: [titulo, data_inicio]
+      primary: titulo
+      sort: [data_inicio, titulo]
+      default:
+        sort: data_inicio
+        order: desc
     fields:
       - name: titulo
         label: Título
@@ -316,9 +328,9 @@ content:
     format: json
     fields:
       - name: atividades
-        label: Próximas atividades
+        label: Atividades fora do Google Agenda (opcional)
         type: object
-        description: "Atividades com data passada somem do site sozinhas (o site é atualizado todos os dias de madrugada)."
+        description: "Os eventos do Google Agenda do grupo aparecem no site sozinhos. Use esta lista só para algo que não esteja na agenda. Datas passadas somem sozinhas."
         list:
           collapsible:
             collapsed: true
@@ -356,4 +368,4 @@ content:
       - name: google_calendar_id
         label: ID do Google Agenda (opcional)
         type: string
-        description: "Cole o ID da agenda ou o link de incorporação (os dois funcionam). Ficam em Configurações da agenda, em Integrar agenda. A agenda precisa estar pública."
+        description: "Cole o ID da agenda ou o link dela (os dois funcionam). A agenda precisa estar pública. Os eventos aparecem no site em até 1 hora depois de criados ou alterados no Google Agenda."

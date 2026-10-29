@@ -1,0 +1,125 @@
+{
+  "titulo": "The Zodiac and Religious Conceptions of Time",
+  "tipo": "Simpósio internacional",
+  "data_inicio": "2026-06-08",
+  "data_fim": "2026-06-09",
+  "local": "",
+  "imagem": "assets/imagens/simposio-zodiaco.jpg",
+  "imagem_ajuste": "preencher",
+  "imagem_descricao": "Cartaz do simpósio The Zodiac and Religious Conceptions of Time, com detalhe de mosaico zodiacal antigo",
+  "descricao": "Dois dias de conferências sobre zodíaco, astrologia e concepções religiosas do tempo, da Babilônia helenística ao rap brasileiro, com pesquisadores da FUV, PUC Campinas, UMESP, FIPEMIG e Southern Methodist University (Dallas). Realização do Observatório com a Faculdade Unida de Vitória e o PPGPCR.",
+  "programacao": [
+    {
+      "dia": "8 de junho",
+      "horario": "14h00–14h10",
+      "responsavel": "Abertura, Silas Klein Cardoso (FUV)",
+      "titulo": "",
+      "dia_en": "8 June",
+      "horario_en": "",
+      "responsavel_en": "Opening, Silas Klein Cardoso (FUV)"
+    },
+    {
+      "dia": "",
+      "horario": "14h10–15h00",
+      "responsavel": "Stephanie Langin-Hooper (SMU, Dallas)",
+      "titulo": "Inventing Epiphany: Changing Relations with the Gods in Hellenistic Babylonia",
+      "dia_en": "",
+      "horario_en": "",
+      "responsavel_en": ""
+    },
+    {
+      "dia": "",
+      "horario": "15h00–15h45",
+      "responsavel": "José Mário Gonçalves (FUV)",
+      "titulo": "Augustine Against the Mathematicos (astrologists): Augustinian Arguments Against Astrology",
+      "dia_en": "",
+      "horario_en": "",
+      "responsavel_en": ""
+    },
+    {
+      "dia": "",
+      "horario": "16h00–16h45",
+      "responsavel": "Paulo Nogueira (PUC Campinas)",
+      "titulo": "The Book of Revelation and its Magical Uses",
+      "dia_en": "",
+      "horario_en": "",
+      "responsavel_en": ""
+    },
+    {
+      "dia": "",
+      "horario": "16h45–17h30",
+      "responsavel": "José Adriano Filho (FUV)",
+      "titulo": "When Monsters Rule (Rev. 13:1-18)",
+      "dia_en": "",
+      "horario_en": "",
+      "responsavel_en": ""
+    },
+    {
+      "dia": "",
+      "horario": "17h45–18h30",
+      "responsavel": "Silas Klein Cardoso (FUV)",
+      "titulo": "Conceptualizing Time with the Zodiac: A Study in Ancient Southern Levantine Art",
+      "dia_en": "",
+      "horario_en": "",
+      "responsavel_en": ""
+    },
+    {
+      "dia": "9 de junho",
+      "horario": "14h00–14h10",
+      "responsavel": "Abertura do dia, José Adriano Filho (FUV)",
+      "titulo": "",
+      "dia_en": "9 June",
+      "horario_en": "",
+      "responsavel_en": "Opening of the day, José Adriano Filho (FUV)"
+    },
+    {
+      "dia": "",
+      "horario": "14h10–15h00",
+      "responsavel": "Silvio Cezar José Pereira Gomes (FUV)",
+      "titulo": "The Calendar Conflict in Ancient Judaism and Chronological Debates between the Synoptic Gospels and John",
+      "dia_en": "",
+      "horario_en": "",
+      "responsavel_en": ""
+    },
+    {
+      "dia": "",
+      "horario": "15h00–15h45",
+      "responsavel": "Wallace Soares (FIPEMIG; PUC Campinas)",
+      "titulo": "Temporality in Milton Schwantes’ Hermeneutics",
+      "dia_en": "",
+      "horario_en": "",
+      "responsavel_en": ""
+    },
+    {
+      "dia": "",
+      "horario": "16h00–16h45",
+      "responsavel": "Bruno de Carvalho Rocha (UMESP)",
+      "titulo": "Musico-religious practices in Brazilian rap: subverting temporality, resisting death, reinventing myth",
+      "dia_en": "",
+      "horario_en": "",
+      "responsavel_en": ""
+    },
+    {
+      "dia": "",
+      "horario": "16h45–17h30",
+      "responsavel": "Élcio Sant’Anna (FUV)",
+      "titulo": "Promethea: Religion and Sequential Art in Alan Moore in the Interartistic Environment",
+      "dia_en": "",
+      "horario_en": "",
+      "responsavel_en": ""
+    },
+    {
+      "dia": "",
+      "horario": "19h00–20h30",
+      "responsavel": "Conferência aberta, Stephanie Langin-Hooper (SMU, Dallas)",
+      "titulo": "Mother and Baby Figurines from Neo-Babylonia and Judea, mid-1st millennium BCE",
+      "dia_en": "",
+      "horario_en": "",
+      "responsavel_en": "Public lecture, Stephanie Langin-Hooper (SMU, Dallas)"
+    }
+  ],
+  "tipo_en": "International symposium",
+  "local_en": "",
+  "imagem_descricao_en": "Poster of the symposium The Zodiac and Religious Conceptions of Time, with a detail of an ancient zodiac mosaic",
+  "descricao_en": "Two days of lectures on the zodiac, astrology and religious conceptions of time, from Hellenistic Babylonia to Brazilian rap, with scholars from FUV, PUC Campinas, UMESP, FIPEMIG and Southern Methodist University (Dallas). Organised by the Observatory with Faculdade Unida de Vitória and its graduate programme PPGPCR."
+}

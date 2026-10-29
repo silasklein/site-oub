@@ -9,22 +9,22 @@ Site em português (universosbiblicos.org) e em inglês (universosbiblicos.org/e
 3. A automação do GitHub (`.github/workflows/publicar.yml`) roda o gerador (`scripts/gerar.mjs`), que monta as duas páginas completas, em português e em inglês, e publica no GitHub Pages.
 4. Em um ou dois minutos o site no ar está atualizado.
 
-Como as páginas já saem prontas, os buscadores leem todo o conteúdo, a abertura aparece de imediato e o site funciona até com o JavaScript desligado. A automação também roda todo dia de madrugada, para tirar da agenda as atividades que já passaram.
+Como as páginas já saem prontas, os buscadores leem todo o conteúdo, a abertura aparece de imediato e o site funciona até com o JavaScript desligado. A automação também roda de hora em hora: traz para a seção Agenda os eventos novos do Google Agenda do grupo e tira os que já passaram.
 
 ## O que tem na pasta
 
 ```
 dados/site.json              textos do site em português (abertura, sobre, focos, contato, Instagram)
 dados/site-en.json           os mesmos textos em inglês
-dados/membros.json           membros, com links de Lattes, ORCID, LinkedIn e e-mail
-dados/eventos.json           eventos e programações
-dados/agenda.json            próximas atividades e Google Agenda
+dados/membros/              um arquivo por membro, com links de Lattes, ORCID, LinkedIn e e-mail
+dados/eventos/              um arquivo por evento, com a programação
+dados/agenda.json            link do Google Agenda e atividades avulsas
 assets/estilo.css            o desenho do site (cores, tipos, grade)
 assets/imagens/              imagens editáveis (as enviadas pelo painel vão para cá)
 assets/icones/               ícones de Lattes, ORCID, LinkedIn, Instagram e e-mail (créditos em CREDITOS.txt)
 assets/fonts/                fonte Jost, hospedada no próprio site (licença OFL incluída)
 assets/*.svg, *.jpg          logo, símbolo, ícone da aba e imagem de compartilhamento
-scripts/gerar.mjs            o gerador das páginas
+scripts/gerar.mjs            o gerador das páginas (package.json lista o leitor de agenda que ele usa)
 .github/workflows/publicar.yml  a automação que gera e publica o site
 .pages.yml                   configuração do painel de edição (Pages CMS)
 404.html                     página para endereços que não existem
@@ -81,17 +81,16 @@ Conta do GitHub: **silasklein**. Domínio: **universosbiblicos.org**.
 Entre em app.pagescms.org, escolha a seção, edite e clique em **Salvar**. O site no ar se atualiza em um ou dois minutos. Para acompanhar, veja a aba **Actions** do repositório: sinal verde é publicação concluída, vermelho é erro.
 
 - **Versão em inglês:** os campos marcados **(inglês)** alimentam a página em inglês. Se um deles ficar vazio, a página em inglês mostra o texto em português, então nada some. Nomes, títulos de eventos e títulos de falas são os mesmos nos dois idiomas.
-- **Membros:** um item por pessoa. Em *Grupo*, escolha Liderança, Pesquisadores doutores, Estudantes ou Colaboradores estrangeiros. Cada pessoa mostra título e nome, instituição (ou nível, para estudantes) e os ícones de Lattes, ORCID, LinkedIn e e-mail. Os links são opcionais e só aparecem se preenchidos; se alguém colar um link sem o `https://`, o site corrige sozinho.
-- **Eventos:** os mais recentes aparecem primeiro. A data é montada sozinha a partir do início e do término. Na programação, preencha *Novo dia* só no primeiro item de cada dia; o *Título da fala* aparece em itálico.
-- **Agenda:** atividades com data passada somem do site sozinhas. Sem atividades futuras, aparece o aviso laranja com o botão para pedir a programação por e-mail.
-- **Google Agenda (opcional):** cole o ID da agenda no último campo da seção Agenda. O ID fica em Google Agenda → Configurações da agenda → Integrar agenda → ID da agenda, e a agenda precisa estar marcada como pública.
+- **Membros:** cada pessoa é um item da lista; clique no nome para editar, ou em **Add an entry** para incluir alguém. Em *Grupo*, escolha Liderança, Pesquisadores doutores, Estudantes ou Colaboradores estrangeiros. Cada pessoa mostra título e nome, instituição (ou nível, para estudantes) e os ícones de Lattes, ORCID, LinkedIn e e-mail. Os links são opcionais e só aparecem se preenchidos; se alguém colar um link sem o `https://`, o site corrige sozinho. O campo *Ordem* define a posição dentro do grupo (números menores primeiro).
+- **Eventos:** cada evento é um item da lista, editável como os membros. Os mais recentes aparecem primeiro. A data é montada sozinha a partir do início e do término. Na programação, preencha *Novo dia* só no primeiro item de cada dia; o *Título da fala* aparece em itálico.
+- **Agenda:** é alimentada pelo Google Agenda do grupo. Crie, altere ou apague eventos direto no Google Agenda: em até 1 hora eles aparecem no site, no mesmo estilo do resto da página, com título, data, horário, local e descrição. Eventos recorrentes e cancelados são tratados sozinhos. Para atualizar na hora, abra a aba **Actions** do repositório → **Publicar site** → **Run workflow**. A agenda precisa continuar pública; o link dela fica no campo *ID do Google Agenda* da seção Agenda do painel. Sem eventos futuros, aparece o aviso laranja com o botão para pedir a programação por e-mail.
 - **Instagram:** o link fica em *Textos do site (português)*. O ícone aparece no contato e no rodapé das duas versões.
 
 ## Observações
 
 - O repositório é **público**: qualquer pessoa pode ver os arquivos e o histórico de alterações. Não guarde nele nada que não deva ser público (CPF, telefones pessoais, documentos internos, senhas). Apagar um arquivo depois não o remove do histórico.
 - Cada salvamento fica registrado no histórico do GitHub, e qualquer versão anterior pode ser recuperada. Mesmo assim, de vez em quando baixe uma cópia em **Code → Download ZIP**.
-- O GitHub pausa automações agendadas de repositórios sem nenhuma alteração por 60 dias. Se isso acontecer, a agenda continua escondendo as atividades vencidas pelo próprio navegador de quem visita; basta salvar qualquer alteração para a automação diária voltar.
+- O GitHub pausa automações agendadas de repositórios sem nenhuma alteração por 60 dias, e avisa por e-mail. Se isso acontecer, os eventos novos do Google Agenda param de entrar no site (os vencidos continuam sumindo pelo navegador de quem visita). Para religar, salve qualquer alteração pelo painel ou clique em **Enable workflow** na aba **Actions**.
 - Depois que o site estiver no ar, cadastre `universosbiblicos.org` no **Google Search Console** (search.google.com/search-console) e envie o endereço `https://universosbiblicos.org/sitemap.xml`.
-- **Para ver o site no computador antes de publicar** (opcional, precisa do Node.js): na pasta do site, rode `node scripts/gerar.mjs` e abra `_site/index.html` no navegador.
+- **Para ver o site no computador antes de publicar** (opcional, precisa do Node.js): na pasta do site, rode `npm install` uma vez e depois `node scripts/gerar.mjs`, e abra `_site/index.html` no navegador.
 - **Para mudar o desenho** (cores, tamanhos, espaçamentos), edite `assets/estilo.css`. Para mudar a estrutura das seções ou os textos fixos (menus, rótulos, nos dois idiomas), edite `scripts/gerar.mjs`.

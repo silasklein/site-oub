@@ -235,3 +235,8 @@ footer .fim .icones{margin-top:0}
   .idioma{margin-left:0}
   .menu-btn{margin-right:0}
 }
+
+/* ---------- Agenda: links para assinar a agenda do grupo ---------- */
+.assinar{display:flex;flex-wrap:wrap;gap:0 32px;padding-top:16px;padding-bottom:16px}
+.assinar a{display:inline-flex;align-items:center;min-height:44px;font-weight:600;font-size:.875rem}
+.proximo .dt small{text-transform:none}
