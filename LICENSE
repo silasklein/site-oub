@@ -18,6 +18,9 @@ Exceções: componentes de terceiros mantêm suas próprias licenças:
     Google Agenda pertencem a seus donos.
   - Biblioteca ical.js (instalada na geração do site): Mozilla Public
     License 2.0.
+  - Logotipos do rodapé (assets/logo-unida.svg e assets/logo-cnpq.svg):
+    marcas da Faculdade Unida de Vitória e do CNPq, usadas apenas para
+    indicar o vínculo institucional do grupo.
   - Cartazes e artes dos eventos pertencem aos seus autores e às
     instituições organizadoras.
 

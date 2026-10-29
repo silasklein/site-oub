@@ -165,6 +165,10 @@ footer .logo-rod img{width:100%;max-width:170px}
 footer p{max-width:34em}
 footer .creditos{background:var(--branco)}
 footer .creditos p+p{margin-top:8px}
+footer .parceiros{display:flex;align-items:center;gap:32px;margin-bottom:24px}
+footer .parceiros img{display:block;width:auto;max-width:none}
+footer .parceiros img:first-child{height:40px}
+footer .parceiros img:last-child{height:32px}
 footer .voltar{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;font-weight:600}
 footer .voltar:hover{text-decoration:underline}
 
