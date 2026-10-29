@@ -212,7 +212,7 @@ footer .voltar:hover{text-decoration:underline}
 @media (max-width:820px){.aviso{grid-column:1 / -1}}
 
 /* ---------- Cabeçalho: ações (menu, idioma) ---------- */
-.acoes{grid-column:2 / span 3;display:flex;align-items:center;justify-content:flex-end;gap:8px;height:100%;padding-right:var(--p)}
+.acoes{grid-column:2 / span 3;display:flex;align-items:center;justify-content:flex-end;gap:8px;height:100%;padding-right:var(--p);border-left:1px solid var(--fio);border-right:1px solid var(--fio)}
 .acoes nav{padding:0}
 .idioma{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;margin-left:16px;border:1px solid var(--preto);font-weight:600;font-size:.875rem;letter-spacing:.08em;text-decoration:none}
 .idioma:hover{background:var(--preto);color:var(--branco)}
@@ -231,7 +231,7 @@ footer .fim{display:flex;flex-direction:column;justify-content:space-between;gap
 footer .fim .icones{margin-top:0}
 
 @media (max-width:820px){
-  .acoes{grid-column:2;gap:4px}
+  .acoes{grid-column:2;gap:4px;border:0}
   .acoes nav{padding:8px var(--p) 20px}
   .idioma{margin-left:0}
   .menu-btn{margin-right:0}
