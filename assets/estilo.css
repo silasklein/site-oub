@@ -59,9 +59,9 @@ ul{list-style:none;margin:0;padding:0}
 /* ---------- Cabeçalho ---------- */
 .topo{position:sticky;top:0;z-index:20;background:var(--branco);border-bottom:1px solid var(--fio)}
 .topo .g{height:72px;align-items:center}
-.marca{grid-column:1;padding:0 var(--p);display:flex;align-items:center;gap:12px;text-decoration:none;height:100%;background:var(--coluna);border-left:1px solid var(--fio)}
+.marca{grid-column:1;padding:0 var(--p);display:flex;align-items:center;justify-content:center;gap:12px;text-decoration:none;height:100%;background:var(--coluna);border-left:1px solid var(--fio)}
 .marca img{width:38px}
-.marca span{font-weight:600;font-size:.875rem;letter-spacing:.32em}
+.marca span{font-weight:600;font-size:.875rem;letter-spacing:.32em;margin-right:-.32em}   /* tira a sobra do espaçamento depois do "B", para centralizar de verdade */
 nav{padding:0}
 nav ul{display:flex;gap:32px}
 nav a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px;text-decoration:none;font-weight:600;font-size:1rem}
@@ -71,7 +71,7 @@ nav a:hover{text-decoration:underline}
 .menu-btn i:nth-child(2){width:65%;margin-left:auto}
 
 /* ---------- Abertura ---------- */
-.abertura .logo-cel{grid-column:1;grid-row:1;display:flex;flex-direction:column;justify-content:space-between;gap:48px;padding-top:56px}
+.abertura .logo-cel{grid-column:1;grid-row:1;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:48px;padding-top:56px}
 .abertura .logo-cel img{width:100%;max-width:230px}
 .abertura h1{grid-column:2 / span 3;grid-row:1;align-self:end;padding:120px var(--p) 56px}
 .faixa{grid-row:2;height:clamp(300px,36vw,460px)}
@@ -161,6 +161,7 @@ details[open] summary::after{content:"−"}
 .contato-dados dd{margin:4px 0 0}
 
 footer{border-top:1px solid var(--fio)}
+footer .logo-rod{display:flex;justify-content:center}
 footer .logo-rod img{width:100%;max-width:170px}
 footer p{max-width:34em}
 footer .voltar{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;font-weight:600}
@@ -170,7 +171,7 @@ footer .voltar:hover{text-decoration:underline}
 @media (max-width:1100px){
   :root{--p:24px}
   nav ul{gap:22px}
-  .marca span{letter-spacing:.2em}
+  .marca span{letter-spacing:.2em;margin-right:-.2em}
 }
 /* ---------- Celular: 2 colunas ---------- */
 @media (max-width:820px){
