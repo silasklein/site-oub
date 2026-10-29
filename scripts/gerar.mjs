@@ -10,6 +10,7 @@
 
 import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync, existsSync, readdirSync } from "node:fs";
 import ICAL from "ical.js";
+import { createHash } from "node:crypto";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -40,6 +41,8 @@ const dt = s => s ? new Date(String(s).slice(0, 10) + "T12:00:00") : null;
 const dd = d => String(d.getDate()).padStart(2, "0");
 const iso = d => d.toISOString().slice(0, 10);
 const COLS = ["c2", "c3", "c4"];
+// Muda sempre que o estilo muda: o navegador de quem visita busca a versão nova na hora.
+const VERSAO_CSS = createHash("sha1").update(readFileSync(join(RAIZ, "assets", "estilo.css"))).digest("hex").slice(0, 8);
 /** Campo traduzido: usa o campo _en na versão em inglês e cai para o português se estiver vazio. */
 const tr = (obj, campo, L) => (L.id === "en" && obj?.[campo + "_en"]) ? obj[campo + "_en"] : (obj?.[campo] ?? "");
 
@@ -553,7 +556,7 @@ function pagina(L) {
 <meta name="theme-color" content="#FFFFFF">
 <link rel="icon" href="${asset(L, "assets/favicon.svg")}" type="image/svg+xml">
 <link rel="preload" href="${asset(L, "assets/fonts/jost-latin-wght-normal.woff2")}" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="${asset(L, "assets/estilo.css")}">
+<link rel="stylesheet" href="${asset(L, "assets/estilo.css")}?v=${VERSAO_CSS}">
 <script type="application/ld+json">${jsonLd(L)}</script>
 </head>
 <body>
