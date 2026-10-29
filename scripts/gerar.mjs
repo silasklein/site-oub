@@ -291,6 +291,20 @@ function secaoEventos(L) {
   </section>`;
 }
 
+/** Aceita o ID da agenda (algo@group.calendar.google.com), o link público ou o link de incorporação. */
+function idGoogleAgenda(valor) {
+  const v = String(valor || "").trim();
+  if (!v) return "";
+  const src = v.match(/[?&]src=([^&"\s]+)/);
+  if (src) return decodeURIComponent(src[1]);
+  const cid = v.match(/[?&]cid=([^&"\s]+)/);
+  if (cid) {
+    const c = decodeURIComponent(cid[1]);
+    try { return /@/.test(c) ? c : Buffer.from(c, "base64").toString("utf8"); } catch { return c; }
+  }
+  return v;
+}
+
 function secaoAgenda(L) {
   const id = L.secoes[4];
   const futuros = (agenda.atividades || []).map(e => ({ ...e, d: dt(e.data) }))
@@ -306,8 +320,9 @@ function secaoAgenda(L) {
         <h3>${L.vazioTitulo}</h3>
         <div><p>${L.vazioTexto}</p>
         <a class="acao" href="mailto:${esc(site.email)}?subject=${encodeURIComponent(L.vazioAssunto)}">${L.vazioAcao}</a></div></div></div>`;
-  const cal = agenda.google_calendar_id
-    ? `<div class="linha"><div class="cel c2-4 calendario"><iframe src="https://calendar.google.com/calendar/embed?src=${encodeURIComponent(agenda.google_calendar_id.trim())}&amp;ctz=America%2FSao_Paulo&amp;hl=${L.calHl}&amp;mode=AGENDA&amp;showTitle=0&amp;showPrint=0" title="${L.calendario}" loading="lazy"></iframe></div></div>`
+  const idAgenda = idGoogleAgenda(agenda.google_calendar_id);
+  const cal = idAgenda
+    ? `<div class="linha"><div class="cel c2-4 calendario"><iframe src="https://calendar.google.com/calendar/embed?src=${encodeURIComponent(idAgenda)}&amp;ctz=America%2FSao_Paulo&amp;hl=${L.calHl}&amp;mode=AGENDA&amp;showTitle=0&amp;showPrint=0" title="${L.calendario}" loading="lazy"></iframe></div></div>`
     : "";
   return `<section id="${id}" aria-labelledby="t-${id}">
     <div class="g">

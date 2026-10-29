@@ -356,4 +356,4 @@ content:
       - name: google_calendar_id
         label: ID do Google Agenda (opcional)
         type: string
-        description: "Se preenchido, o calendário do grupo aparece embaixo da lista. Fica em Configurações da agenda, em Integrar agenda."
+        description: "Cole o ID da agenda ou o link de incorporação (os dois funcionam). Ficam em Configurações da agenda, em Integrar agenda. A agenda precisa estar pública."
