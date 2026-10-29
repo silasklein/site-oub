@@ -435,7 +435,7 @@ function secaoAgenda(L) {
         <h3>${L.vazioTitulo}</h3>
         <div><p>${texto}</p>
         <a class="acao" href="mailto:${esc(site.email)}?subject=${encodeURIComponent(L.vazioAssunto)}">${L.vazioAcao}</a></div></div></div>`;
-  return `<section id="${id}" class="faixa-cinza" aria-labelledby="t-${id}">
+  return `<section id="${id}" aria-labelledby="t-${id}">
     <div class="g">
       ${cabecalhoSecao("05", id, id)}
       ${itens}
