@@ -84,6 +84,7 @@ const IDIOMAS = {
     instituicao: "Instituição", diretorio: "Diretório do CNPq", verEspelho: "Ver o espelho do grupo",
     instagram: "Instagram do Observatório", escrever: e => `Escrever para ${e}`,
     rodape: "Observatório de Universos Bíblicos (OUB), grupo de pesquisa da Faculdade Unida de Vitória certificado pelo CNPq.",
+    direitos: "© 2026 Observatório de Universos Bíblicos. Todos os direitos reservados.",
     voltar: "Voltar ao início",
     e: " e ",
   },
@@ -121,6 +122,7 @@ const IDIOMAS = {
     instituicao: "Institution", diretorio: "CNPq directory", verEspelho: "View the group's CNPq page",
     instagram: "The Observatory on Instagram", escrever: e => `Write to ${e}`,
     rodape: "Observatório de Universos Bíblicos (OUB), a research group at Faculdade Unida de Vitória certified by CNPq.",
+    direitos: "© 2026 Observatório de Universos Bíblicos. All rights reserved.",
     voltar: "Back to top",
     e: " and ",
   },
@@ -480,7 +482,7 @@ function secaoContato(L) {
 const rodape = L => `<footer class="camada">
   <div class="g">
     <div class="cel c1 logo-rod"><img src="${asset(L, "assets/logo-oub.svg")}" alt="" width="170" height="139" loading="lazy"></div>
-    <p class="cel c2-3 pequeno cinza" style="align-self:end">${L.rodape}</p>
+    <div class="cel c2-3 pequeno cinza creditos" style="align-self:end"><p>${L.rodape}</p><p>${L.direitos}</p></div>
     <div class="cel c4 fim">${iconesGrupo(L, false)}<a class="voltar pequeno" href="#inicio">${L.voltar}</a></div>
   </div>
 </footer>`;

@@ -1,0 +1,39 @@
+© 2026 Observatório de Universos Bíblicos. Todos os direitos reservados.
+
+O conteúdo deste repositório e do site universosbiblicos.org (textos,
+traduções, imagens, logotipo, identidade visual, desenho das páginas e
+código-fonte) pertence ao Observatório de Universos Bíblicos (OUB), grupo de
+pesquisa da Faculdade Unida de Vitória, salvo indicação em contrário.
+
+O código-fonte está publicado aqui apenas para que o site seja gerado e
+hospedado no GitHub Pages. A visibilidade pública do repositório não concede
+licença de uso. Nenhuma parte pode ser copiada, reproduzida, modificada,
+distribuída ou usada em outros sites ou publicações sem autorização prévia e
+por escrito do OUB. Pedidos de autorização: observatorio@fuv.edu.br.
+
+Exceções: componentes de terceiros mantêm suas próprias licenças:
+  - Fonte Jost (assets/fonts/): SIL Open Font License 1.1, ver OFL-Jost.txt.
+  - Ícones (assets/icones/): Simple Icons (CC0 1.0) e Tabler Icons (MIT),
+    ver CREDITOS.txt. As marcas Lattes/CNPq, ORCID, LinkedIn, Instagram e
+    Google Agenda pertencem a seus donos.
+  - Biblioteca ical.js (instalada na geração do site): Mozilla Public
+    License 2.0.
+  - Cartazes e artes dos eventos pertencem aos seus autores e às
+    instituições organizadoras.
+
+--------------------------------------------------------------------------
+
+© 2026 Observatório de Universos Bíblicos. All rights reserved.
+
+The contents of this repository and of the website universosbiblicos.org
+(texts, translations, images, logo, visual identity, page design and source
+code) belong to the Observatório de Universos Bíblicos (OUB), a research
+group at Faculdade Unida de Vitória, unless stated otherwise.
+
+The source code is published here only so that the website can be built and
+hosted on GitHub Pages. The public visibility of this repository does not
+grant any licence. No part may be copied, reproduced, modified, distributed
+or used in other websites or publications without prior written permission
+from the OUB. Permission requests: observatorio@fuv.edu.br.
+
+Exceptions: third-party components keep their own licences, as listed above.

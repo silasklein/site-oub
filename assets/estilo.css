@@ -163,6 +163,8 @@ details[open] summary::after{content:"−"}
 footer{border-top:1px solid var(--fio)}
 footer .logo-rod img{width:100%;max-width:170px}
 footer p{max-width:34em}
+footer .creditos{background:var(--branco)}
+footer .creditos p+p{margin-top:8px}
 footer .voltar{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;font-weight:600}
 footer .voltar:hover{text-decoration:underline}
 

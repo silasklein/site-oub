@@ -29,6 +29,7 @@ scripts/gerar.mjs            o gerador das páginas (package.json lista o leitor
 .pages.yml                   configuração do painel de edição (Pages CMS)
 404.html                     página para endereços que não existem
 robots.txt, CNAME            orientação para buscadores e domínio do site
+LICENSE                      direitos autorais: todos os direitos reservados ao OUB
 ```
 
 Atenção: `.github`, `.pages.yml` e `.gitignore` começam com ponto e podem ficar ocultos no seu computador. No Mac, aperte **Cmd + Shift + .** no Finder para vê-los. No Windows, ative "Itens ocultos" na aba Exibir do Explorador.
