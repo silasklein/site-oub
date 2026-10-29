@@ -13,6 +13,7 @@
   --max:1360px;
 }
 *{box-sizing:border-box}
+[hidden]{display:none !important}   /* "hidden" vence o display:grid das linhas da grade */
 html{scroll-behavior:smooth;scroll-padding-top:72px}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{margin:0;position:relative;min-height:100vh;background:var(--branco);color:var(--preto);font:400 1rem/1.6 "Jost",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
