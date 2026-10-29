@@ -147,7 +147,7 @@ details[open] summary::after{content:"−"}
 .proximo .dt{font-weight:700;font-size:1.75rem;line-height:1.1;letter-spacing:-.02em}
 .proximo .dt small{display:block;font-size:.875rem;font-weight:600;letter-spacing:0;margin-top:8px}
 .proximo h3{font-weight:700;font-size:1.25rem}
-.proximo .campo{font-weight:600;color:var(--preto)}
+.proximo .campo{font-weight:600}   /* mesma cor cinza do texto que vem depois */
 .proximo h3+p{margin-top:4px}
 .proximo p{color:var(--cinza);font-size:.875rem;line-height:1.5}
 .calendario{padding:0 0 var(--p)}
