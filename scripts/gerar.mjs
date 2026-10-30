@@ -96,6 +96,7 @@ const IDIOMAS = {
     vazioTexto: "Reuniões, seminários e eventos abertos do grupo aparecem aqui assim que forem marcados.",
     vazioAcao: "Pedir a programação por e-mail", vazioAssunto: "Programação do Observatório de Universos Bíblicos",
     rotuloLocal: "Local:", rotuloObs: "Observações:",
+    verMais1: "Ver mais 1 próxima atividade", verMaisN: "Ver mais {n} próximas atividades", mostrarMenos: "Mostrar só as 3 próximas",
     verAnteriores: "Ver atividades anteriores", ocultarAnteriores: "Ocultar atividades anteriores", anterioresRegiao: "Atividades do semestre anterior e do atual",
     assinarRotulo: "Assinar a agenda", assinarGoogle: "Adicionar ao Google Agenda", assinarIcs: "Assinar em outro aplicativo de calendário (.ics)",
     agendaFalhou: "A agenda do grupo não pôde ser atualizada agora. Ela volta a aparecer aqui na próxima atualização do site.",
@@ -135,6 +136,7 @@ const IDIOMAS = {
     vazioTexto: "Group meetings, seminars and public events appear here as soon as they are scheduled.",
     vazioAcao: "Ask for the programme by e-mail", vazioAssunto: "Programme of the Observatory of Biblical Universes",
     rotuloLocal: "Location:", rotuloObs: "Notes:",
+    verMais1: "Show 1 more upcoming activity", verMaisN: "Show {n} more upcoming activities", mostrarMenos: "Show only the next 3",
     verAnteriores: "Show past activities", ocultarAnteriores: "Hide past activities", anterioresRegiao: "Activities from the previous and current semester",
     assinarRotulo: "Subscribe to the calendar", assinarGoogle: "Add to Google Calendar", assinarIcs: "Subscribe in another calendar app (.ics)",
     agendaFalhou: "The group calendar could not be updated right now. It will be back here at the next site update.",
@@ -349,6 +351,7 @@ function idGoogleAgenda(valor) {
 const FUSO = "America/Sao_Paulo";
 const MESES_A_FRENTE = 6;   // mostra eventos que começam nos próximos 6 meses (de hoje até o mesmo dia, 6 meses depois)
 const MAX_EVENTOS = 12;
+const VISIVEIS = 3;   // próximas atividades à mostra; as demais abrem pelo botão "Ver mais"
 // "Ver atividades anteriores": do início do semestre anterior até hoje.
 // Semestres: janeiro–junho e julho–dezembro. Ex.: em março de 2027, mostra desde 1º de julho de 2026.
 const MAX_ANTERIORES = 120;
@@ -472,7 +475,7 @@ function secaoAgenda(L) {
   // passa para "atividades anteriores" o que terminou entre uma atualização e outra.
   const itens = lista.map(e => linhaAgenda(e, L)).join("\n      ");
   const seta = `<svg class="seta" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-  const botao = `<button type="button" class="anteriores-btn" aria-expanded="false" aria-controls="agenda-anteriores" data-ver="${esc(L.verAnteriores)}" data-ocultar="${esc(L.ocultarAnteriores)}"${anteriores.length ? "" : " hidden"}><span>${L.verAnteriores}</span>${seta}</button>`;
+  const botao = `<button type="button" class="seta-btn anteriores-btn" aria-expanded="false" aria-controls="agenda-anteriores" data-ver="${esc(L.verAnteriores)}" data-ocultar="${esc(L.ocultarAnteriores)}"${anteriores.length ? "" : " hidden"}><span>${L.verAnteriores}</span>${seta}</button>`;
   const blocoAnteriores = `<div class="anteriores" id="agenda-anteriores" role="region" aria-label="${esc(L.anterioresRegiao)}" hidden>
       ${anteriores.map(e => linhaAgenda(e, L, true)).join("\n      ")}
       </div>`;
@@ -490,7 +493,12 @@ function secaoAgenda(L) {
   return `<section id="${id}" aria-labelledby="t-${id}">
     <div class="g">
       ${cabecalhoSecao("05", id, id)}
+      <div class="futuras" id="agenda-futuras">
       ${itens}
+      </div>
+      <div class="linha mais-linha"${lista.length > VISIVEIS ? "" : " hidden"}><div class="c1"></div><div class="cel c2-4 mais">
+        <button type="button" class="seta-btn mais-btn" aria-expanded="false" aria-controls="agenda-futuras" data-mais1="${esc(L.verMais1)}" data-maisn="${esc(L.verMaisN)}" data-menos="${esc(L.mostrarMenos)}"><span>${lista.length - VISIVEIS === 1 ? L.verMais1 : L.verMaisN.replace("{n}", lista.length - VISIVEIS)}</span>${seta}</button>
+      </div></div>
       ${vazio}
       ${assinar}
       <div class="c1 agenda-fim"></div>
@@ -607,6 +615,19 @@ const scriptPagina = L => `<script>
       if (caixa) caixa.insertBefore(itens[i], caixa.firstChild); else itens[i].hidden = true;
     } else restantes++;
   }
+  /* Próximas: só as 3 primeiras à mostra; "Ver mais" abre as demais. */
+  var VIS = ${VISIVEIS}, futuras = document.querySelectorAll("#agenda-futuras .proximo"), mais = document.querySelector(".mais-btn");
+  function aplicar(aberto){
+    for (var j = 0; j < futuras.length; j++) futuras[j].hidden = !aberto && j >= VIS;
+    var resto = futuras.length - VIS;
+    if (!mais) return;
+    mais.closest(".linha").hidden = resto <= 0;
+    mais.setAttribute("aria-expanded", String(aberto));
+    mais.querySelector("span").textContent = aberto ? mais.getAttribute("data-menos") : (resto === 1 ? mais.getAttribute("data-mais1") : mais.getAttribute("data-maisn").replace("{n}", resto));
+  }
+  futuras = Array.prototype.filter.call(futuras, function(x){ return !x.classList.contains("passado"); });
+  aplicar(false);
+  if (mais) mais.addEventListener("click", function(){ aplicar(mais.getAttribute("aria-expanded") !== "true"); });
   var vazio = document.querySelector(".agenda-vazia");
   if (vazio && itens.length && !restantes) vazio.hidden = false;
   if (botao && caixa) {
