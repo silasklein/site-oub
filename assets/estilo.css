@@ -171,7 +171,7 @@ footer .creditos{background:var(--branco)}
 footer .creditos p+p{margin-top:8px}
 footer .parceiros{display:flex;align-items:flex-end;gap:32px;margin-bottom:24px}   /* base dos dois logos alinhada */
 footer .parceiros img{display:block;width:auto;max-width:none}
-footer .parceiros img:first-child{width:28px;height:24px}   /* altura das letras do CNPq até a base do logo */
+footer .parceiros img:first-child{width:35px;height:30px}   /* quase a altura do logo do CNPq, com a base alinhada */
 footer .parceiros img:last-child{width:104px;height:32px}
 footer .voltar{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;font-weight:600}
 footer .voltar:hover{text-decoration:underline}

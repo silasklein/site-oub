@@ -498,8 +498,8 @@ function secaoContato(L) {
 
 const rodape = L => `<footer class="camada">
   <div class="g">
-    <div class="cel c1 logo-rod"><img src="${asset(L, "assets/logo-oub.svg")}" alt="" width="170" height="139" loading="lazy"></div>
-    <div class="cel c2-3 pequeno cinza creditos" style="align-self:end"><div class="parceiros"><img src="${asset(L, "assets/logo-unida.svg")}" alt="Faculdade Unida de Vitória" width="28" height="24" loading="lazy"><img src="${asset(L, "assets/logo-cnpq.svg")}" alt="CNPq" width="104" height="32" loading="lazy"></div><p>${L.rodape}</p><p>${L.direitos}</p></div>
+    <div class="cel c1 logo-rod"><img src="${asset(L, "assets/logo-oub-rodape.svg")}" alt="" width="170" height="121" loading="lazy"></div>
+    <div class="cel c2-3 pequeno cinza creditos" style="align-self:end"><div class="parceiros"><img src="${asset(L, "assets/logo-unida.svg")}" alt="Faculdade Unida de Vitória" width="35" height="30" loading="lazy"><img src="${asset(L, "assets/logo-cnpq.svg")}" alt="CNPq" width="104" height="32" loading="lazy"></div><p>${L.rodape}</p><p>${L.direitos}</p></div>
     <div class="cel c4 fim">${iconesGrupo(L, false)}<a class="voltar pequeno" href="#inicio">${L.voltar}</a></div>
   </div>
 </footer>`;
