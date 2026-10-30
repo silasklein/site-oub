@@ -267,6 +267,27 @@ content:
         label: Local (inglês)
         type: string
         description: "Opcional. Se ficar vazio, a versão em inglês usa o texto em português."
+      - name: entrada
+        label: Entrada
+        type: select
+        default: nao_informar
+        description: "Informação para o Google (não aparece na página)."
+        options:
+          values:
+            - name: nao_informar
+              label: Não informar
+            - name: gratuita
+              label: Gratuita
+            - name: paga
+              label: Paga
+      - name: valor
+        label: Valor da inscrição (R$)
+        type: number
+        description: "Só para entrada paga. Ex.: 150."
+      - name: link_inscricao
+        label: Link de inscrição
+        type: string
+        description: "Opcional. Endereço completo da página de inscrição."
       - name: imagem
         label: Imagem (cartaz ou arte)
         type: image

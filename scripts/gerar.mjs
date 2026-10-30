@@ -505,6 +505,31 @@ const rodape = L => `<footer class="camada">
 </footer>`;
 
 // ---------------------------------------------------------------- dados estruturados (schema.org)
+// nomes de quem se apresenta, tirados da programação ("Abertura, Fulano (Inst.)", "Tema, com Fulano e Beltrano")
+function apresentadores(e) {
+  const nomes = [];
+  for (const item of e.programacao || []) {
+    const bruto = String(item.responsavel || "");
+    const temPessoa = /\(|,/.test(bruto);
+    let s = bruto.replace(/\([^)]*\)/g, "").trim();
+    if (!temPessoa || !s) continue;
+    if (s.includes(", com ")) s = s.split(", com ").pop();
+    else if (s.includes(", ")) s = s.split(", ").pop();
+    for (const n of s.split(/\s+e\s+/)) {
+      const nome = n.replace(/^com\s+/, "").trim();
+      if (nome && /^\p{Lu}/u.test(nome) && !nomes.includes(nome)) nomes.push(nome);
+    }
+  }
+  return nomes;
+}
+// inscrição (preenchida no painel): só entra nos dados estruturados se o evento disser gratuita ou paga
+function oferta(e) {
+  if (e.entrada !== "gratuita" && e.entrada !== "paga") return undefined;
+  const valor = e.entrada === "gratuita" ? 0 : Number(e.valor);
+  if (e.entrada === "paga" && !(valor > 0)) return undefined;
+  return { "@type": "Offer", price: valor, priceCurrency: "BRL", availability: "https://schema.org/InStock",
+           url: e.link_inscricao ? link(e.link_inscricao) : DOMINIO + "/#eventos" };
+}
 function jsonLd(L) {
   const org = {
     "@context": "https://schema.org", "@type": "ResearchOrganization",
@@ -524,6 +549,10 @@ function jsonLd(L) {
     image: e.imagem ? `${DOMINIO}/${String(e.imagem).replace(/^\/+/, "")}` : undefined,
     location: { "@type": "Place", name: e.local || "Faculdade Unida de Vitória", address: e.local || "Vitória, ES, Brasil" },
     organizer: { "@type": "Organization", name: "Observatório de Universos Bíblicos", url: DOMINIO + "/" },
+    performer: apresentadores(e).length
+      ? apresentadores(e).map(n => ({ "@type": "Person", name: n }))
+      : { "@type": "Organization", name: "Observatório de Universos Bíblicos", url: DOMINIO + "/" },
+    offers: oferta(e),
   }));
   return JSON.stringify([org, ...evs]).replace(/</g, "\\u003c");
 }
