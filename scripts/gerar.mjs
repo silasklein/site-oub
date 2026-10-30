@@ -96,7 +96,7 @@ const IDIOMAS = {
     vazioTexto: "Reuniões, seminários e eventos abertos do grupo aparecem aqui assim que forem marcados.",
     vazioAcao: "Pedir a programação por e-mail", vazioAssunto: "Programação do Observatório de Universos Bíblicos",
     rotuloLocal: "Local:", rotuloObs: "Observações:",
-    verAnteriores: "Ver atividades anteriores", ocultarAnteriores: "Ocultar atividades anteriores", anterioresRegiao: "Atividades dos últimos 6 meses",
+    verAnteriores: "Ver atividades anteriores", ocultarAnteriores: "Ocultar atividades anteriores", anterioresRegiao: "Atividades do semestre anterior e do atual",
     assinarRotulo: "Assinar a agenda", assinarGoogle: "Adicionar ao Google Agenda", assinarIcs: "Assinar em outro aplicativo de calendário (.ics)",
     agendaFalhou: "A agenda do grupo não pôde ser atualizada agora. Ela volta a aparecer aqui na próxima atualização do site.",
     instituicao: "Instituição", diretorio: "Diretório do CNPq", verEspelho: "Ver o espelho do grupo",
@@ -135,7 +135,7 @@ const IDIOMAS = {
     vazioTexto: "Group meetings, seminars and public events appear here as soon as they are scheduled.",
     vazioAcao: "Ask for the programme by e-mail", vazioAssunto: "Programme of the Observatory of Biblical Universes",
     rotuloLocal: "Location:", rotuloObs: "Notes:",
-    verAnteriores: "Show past activities", ocultarAnteriores: "Hide past activities", anterioresRegiao: "Activities from the last 6 months",
+    verAnteriores: "Show past activities", ocultarAnteriores: "Hide past activities", anterioresRegiao: "Activities from the previous and current semester",
     assinarRotulo: "Subscribe to the calendar", assinarGoogle: "Add to Google Calendar", assinarIcs: "Subscribe in another calendar app (.ics)",
     agendaFalhou: "The group calendar could not be updated right now. It will be back here at the next site update.",
     instituicao: "Institution", diretorio: "CNPq directory", verEspelho: "View the group's CNPq page",
@@ -349,8 +349,18 @@ function idGoogleAgenda(valor) {
 const FUSO = "America/Sao_Paulo";
 const JANELA_DIAS = 365;   // mostra eventos dos próximos 12 meses
 const MAX_EVENTOS = 12;
-const PASSADO_DIAS = 183;  // "Ver atividades anteriores": últimos 6 meses
-const MAX_ANTERIORES = 60;
+// "Ver atividades anteriores": do início do semestre anterior até hoje.
+// Semestres: janeiro–junho e julho–dezembro. Ex.: em março de 2027, mostra desde 1º de julho de 2026.
+const MAX_ANTERIORES = 120;
+const INICIO_ANTERIORES = (() => {
+  const h = partesHoje();
+  const [ano, mes] = h.mes <= 6 ? [h.ano - 1, 7] : [h.ano, 1];
+  return new Date(`${ano}-${String(mes).padStart(2, "0")}-01T00:00:00-03:00`);   // horário de Brasília
+})();
+function partesHoje() {
+  const o = {}; for (const p of new Intl.DateTimeFormat("en-CA", { timeZone: "America/Sao_Paulo", year: "numeric", month: "2-digit" }).formatToParts(new Date())) o[p.type] = p.value;
+  return { ano: +o.year, mes: +o.month };
+}
 
 const partes = (() => {
   const f = new Intl.DateTimeFormat("en-CA", { timeZone: FUSO, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23", weekday: "short" });
@@ -383,7 +393,7 @@ async function lerGoogleAgenda(id) {
   const comp = new ICAL.Component(ICAL.parse(ics));
   for (const tz of comp.getAllSubcomponents("vtimezone")) ICAL.TimezoneService.register(new ICAL.Timezone(tz));
   const agora = new Date(), limite = new Date(agora.getTime() + JANELA_DIAS * 864e5);
-  const desde = new Date(agora.getTime() - PASSADO_DIAS * 864e5);
+  const desde = INICIO_ANTERIORES;
   const bases = new Map(), soltos = [];
   const vevents = comp.getAllSubcomponents("vevent");
   for (const v of vevents) if (!v.hasProperty("recurrence-id")) bases.set(v.getFirstPropertyValue("uid"), new ICAL.Event(v));
@@ -452,7 +462,7 @@ function secaoAgenda(L) {
     const p = { ano: d.getFullYear(), mes: d.getMonth() + 1, dia: d.getDate() };
     return { inicio: p, fim: p, diaInteiro: !e.hora, hora: e.hora || "", ordem: d.getTime(), termina: d.getTime() + 864e5,
       titulo: tr(e, "titulo", L), local: tr(e, "local", L), descricao: tr(e, "descricao", L) };
-  }).filter(e => e && e.termina >= HOJE.getTime() - PASSADO_DIAS * 864e5);
+  }).filter(e => e && e.termina >= INICIO_ANTERIORES.getTime());
   const agora = Date.now();
   const todos = [...(eventosGoogle || []), ...manuais].sort((a, b) => a.ordem - b.ordem);
   const lista = todos.filter(e => e.termina >= agora).slice(0, MAX_EVENTOS);
