@@ -258,3 +258,13 @@ footer .fim .icones{margin-top:0}
 :root{--evento:#F9FAFA}
 .proximo .c2-4{background:var(--evento)}
 .proximo .dt small{text-transform:none}
+
+/* ---------- Agenda: atividades anteriores (últimos 6 meses), abertas pelo botão com seta ---------- */
+.anteriores{grid-column:1 / -1;display:grid;grid-template-columns:subgrid}
+.anteriores-btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;margin-left:auto;padding:0;background:none;border:0;color:var(--preto);font:600 .875rem/1.5 "Jost",system-ui,sans-serif;cursor:pointer}
+.anteriores-btn:hover span{text-decoration:underline}
+.anteriores-btn[aria-expanded="true"] .seta{transform:rotate(180deg)}
+.proximo.passado .c2-4{background:var(--branco)}
+/* texto mais claro que o das próximas atividades; #767672 ainda passa no contraste mínimo (4,5:1) sobre branco */
+.proximo.passado .dt,.proximo.passado h3,.proximo.passado p{color:#767672}
+@media (max-width:820px){.anteriores-btn{margin-left:0}}

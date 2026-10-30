@@ -96,6 +96,7 @@ const IDIOMAS = {
     vazioTexto: "Reuniões, seminários e eventos abertos do grupo aparecem aqui assim que forem marcados.",
     vazioAcao: "Pedir a programação por e-mail", vazioAssunto: "Programação do Observatório de Universos Bíblicos",
     rotuloLocal: "Local:", rotuloObs: "Observações:",
+    verAnteriores: "Ver atividades anteriores", ocultarAnteriores: "Ocultar atividades anteriores", anterioresRegiao: "Atividades dos últimos 6 meses",
     assinarRotulo: "Assinar a agenda", assinarGoogle: "Adicionar ao Google Agenda", assinarIcs: "Assinar em outro aplicativo de calendário (.ics)",
     agendaFalhou: "A agenda do grupo não pôde ser atualizada agora. Ela volta a aparecer aqui na próxima atualização do site.",
     instituicao: "Instituição", diretorio: "Diretório do CNPq", verEspelho: "Ver o espelho do grupo",
@@ -134,6 +135,7 @@ const IDIOMAS = {
     vazioTexto: "Group meetings, seminars and public events appear here as soon as they are scheduled.",
     vazioAcao: "Ask for the programme by e-mail", vazioAssunto: "Programme of the Observatory of Biblical Universes",
     rotuloLocal: "Location:", rotuloObs: "Notes:",
+    verAnteriores: "Show past activities", ocultarAnteriores: "Hide past activities", anterioresRegiao: "Activities from the last 6 months",
     assinarRotulo: "Subscribe to the calendar", assinarGoogle: "Add to Google Calendar", assinarIcs: "Subscribe in another calendar app (.ics)",
     agendaFalhou: "The group calendar could not be updated right now. It will be back here at the next site update.",
     instituicao: "Institution", diretorio: "CNPq directory", verEspelho: "View the group's CNPq page",
@@ -347,6 +349,8 @@ function idGoogleAgenda(valor) {
 const FUSO = "America/Sao_Paulo";
 const JANELA_DIAS = 365;   // mostra eventos dos próximos 12 meses
 const MAX_EVENTOS = 12;
+const PASSADO_DIAS = 183;  // "Ver atividades anteriores": últimos 6 meses
+const MAX_ANTERIORES = 60;
 
 const partes = (() => {
   const f = new Intl.DateTimeFormat("en-CA", { timeZone: FUSO, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23", weekday: "short" });
@@ -379,6 +383,7 @@ async function lerGoogleAgenda(id) {
   const comp = new ICAL.Component(ICAL.parse(ics));
   for (const tz of comp.getAllSubcomponents("vtimezone")) ICAL.TimezoneService.register(new ICAL.Timezone(tz));
   const agora = new Date(), limite = new Date(agora.getTime() + JANELA_DIAS * 864e5);
+  const desde = new Date(agora.getTime() - PASSADO_DIAS * 864e5);
   const bases = new Map(), soltos = [];
   const vevents = comp.getAllSubcomponents("vevent");
   for (const v of vevents) if (!v.hasProperty("recurrence-id")) bases.set(v.getFirstPropertyValue("uid"), new ICAL.Event(v));
@@ -391,7 +396,7 @@ async function lerGoogleAgenda(id) {
   const incluir = (item, inicio, fim) => {
     if (cancelado(item)) return;
     const ini = inicio.toJSDate(), f = (fim || inicio).toJSDate();
-    if (f < agora || ini > limite) return;
+    if (f < desde || ini > limite) return;
     const diaInteiro = inicio.isDate;
     saida.push({
       inicio: diaInteiro ? { ano: inicio.year, mes: inicio.month, dia: inicio.day } : partes(ini),
@@ -424,7 +429,7 @@ const DIAS_SEMANA = {
 const hora = (p, L) => L.id === "pt" ? `${p.h}h${p.min ? String(p.min).padStart(2, "0") : ""}` : `${String(p.h).padStart(2, "0")}:${String(p.min).padStart(2, "0")}`;
 const mesmoDia = (a, b) => a.ano === b.ano && a.mes === b.mes && a.dia === b.dia;
 
-function linhaAgenda(e, L) {
+function linhaAgenda(e, L, passado = false) {
   const M = L.meses, i = e.inicio, f = e.fim;
   const multi = !mesmoDia(i, f);
   const grande = !multi ? `${String(i.dia).padStart(2, "0")} ${M[i.mes - 1]}`
@@ -433,7 +438,7 @@ function linhaAgenda(e, L) {
   const sem = DIAS_SEMANA[L.id][new Date(Date.UTC(i.ano, i.mes - 1, i.dia)).getUTCDay()];
   const quando = [i.ano !== partes(new Date()).ano ? String(i.ano) : "", multi ? "" : sem,
     e.diaInteiro ? "" : (e.hora || `${hora(i, L)}–${hora(f, L)}`)].filter(Boolean).join(", ");
-  return `<div class="linha proximo" data-fim="${e.termina}">
+  return `<div class="linha proximo${passado ? " passado" : ""}" data-fim="${e.termina}">
         <div class="cel c1 dt">${grande}<small>${esc(quando)}</small></div>
         <div class="cel c2-4"><h3>${esc(e.titulo)}</h3>${e.local ? `<p><span class="campo">${L.rotuloLocal}</span> ${esc(e.local)}</p>` : ""}${e.descricao ? `<p><span class="campo">${L.rotuloObs}</span> ${esc(e.descricao)}</p>` : ""}</div>
       </div>`;
@@ -447,15 +452,25 @@ function secaoAgenda(L) {
     const p = { ano: d.getFullYear(), mes: d.getMonth() + 1, dia: d.getDate() };
     return { inicio: p, fim: p, diaInteiro: !e.hora, hora: e.hora || "", ordem: d.getTime(), termina: d.getTime() + 864e5,
       titulo: tr(e, "titulo", L), local: tr(e, "local", L), descricao: tr(e, "descricao", L) };
-  }).filter(e => e && e.termina >= HOJE.getTime());
-  const lista = [...(eventosGoogle || []), ...manuais].sort((a, b) => a.ordem - b.ordem).slice(0, MAX_EVENTOS);
+  }).filter(e => e && e.termina >= HOJE.getTime() - PASSADO_DIAS * 864e5);
+  const agora = Date.now();
+  const todos = [...(eventosGoogle || []), ...manuais].sort((a, b) => a.ordem - b.ordem);
+  const lista = todos.filter(e => e.termina >= agora).slice(0, MAX_EVENTOS);
+  const anteriores = todos.filter(e => e.termina < agora).reverse().slice(0, MAX_ANTERIORES);   // mais recente primeiro
   // Cada linha leva o horário de término em data-fim: um script pequeno no fim da página
-  // esconde o que já passou entre uma atualização e outra.
+  // passa para "atividades anteriores" o que terminou entre uma atualização e outra.
   const itens = lista.map(e => linhaAgenda(e, L)).join("\n      ");
-  const assinar = idAgendaGoogle ? `<div class="linha"><div class="c1"></div><div class="cel c2-4 assinar">
-        <span class="rotulo cinza">${L.assinarRotulo}</span>
-        <div class="icones">${linkIcone(`https://calendar.google.com/calendar/u/0?cid=${encodeURIComponent(Buffer.from(idAgendaGoogle).toString("base64").replace(/=+$/, ""))}`, "googlecalendar", L.assinarGoogle, L)}${linkIcone(`https://calendar.google.com/calendar/ical/${encodeURIComponent(idAgendaGoogle)}/public/basic.ics`, "calendario", L.assinarIcs, L, false)}</div>
-      </div></div>` : "";
+  const seta = `<svg class="seta" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const botao = `<button type="button" class="anteriores-btn" aria-expanded="false" aria-controls="agenda-anteriores" data-ver="${esc(L.verAnteriores)}" data-ocultar="${esc(L.ocultarAnteriores)}"${anteriores.length ? "" : " hidden"}><span>${L.verAnteriores}</span>${seta}</button>`;
+  const blocoAnteriores = `<div class="anteriores" id="agenda-anteriores" role="region" aria-label="${esc(L.anterioresRegiao)}" hidden>
+      ${anteriores.map(e => linhaAgenda(e, L, true)).join("\n      ")}
+      </div>`;
+  const assinar = `<div class="linha"><div class="c1"></div><div class="cel c2-4 assinar">
+        ${idAgendaGoogle ? `<span class="rotulo cinza">${L.assinarRotulo}</span>
+        <div class="icones">${linkIcone(`https://calendar.google.com/calendar/u/0?cid=${encodeURIComponent(Buffer.from(idAgendaGoogle).toString("base64").replace(/=+$/, ""))}`, "googlecalendar", L.assinarGoogle, L)}${linkIcone(`https://calendar.google.com/calendar/ical/${encodeURIComponent(idAgendaGoogle)}/public/basic.ics`, "calendario", L.assinarIcs, L, false)}</div>` : ""}
+        ${botao}
+      </div></div>
+      ${blocoAnteriores}`;
   const texto = eventosGoogle === null ? L.agendaFalhou : L.vazioTexto;
   const vazio = `<div class="linha agenda-vazia"${lista.length ? " hidden" : ""}><div class="c1"></div><div class="cel c2-3 bloco vazio">
         <h3>${L.vazioTitulo}</h3>
@@ -571,14 +586,27 @@ const scriptPagina = L => `<script>
   document.addEventListener("keydown", function(e){ if(e.key === "Escape" && nav.classList.contains("aberto")) fechar(true); });
   nav.addEventListener("click", function(e){ if(e.target.tagName === "A") fechar(false); });
 
-  /* Agenda: esconde o que já terminou desde a última atualização do site. */
+  /* Agenda: o que terminou desde a última atualização do site passa para "atividades anteriores". */
   var agora = Date.now();
-  var itens = document.querySelectorAll(".proximo[data-fim]"), restantes = 0;
+  var itens = document.querySelectorAll(".proximo:not(.passado)[data-fim]"), restantes = 0;
+  var caixa = document.getElementById("agenda-anteriores"), botao = document.querySelector(".anteriores-btn");
   for (var i = 0; i < itens.length; i++) {
-    if (Number(itens[i].getAttribute("data-fim")) < agora) itens[i].hidden = true; else restantes++;
+    if (Number(itens[i].getAttribute("data-fim")) < agora) {
+      itens[i].classList.add("passado");
+      if (caixa) caixa.insertBefore(itens[i], caixa.firstChild); else itens[i].hidden = true;
+    } else restantes++;
   }
   var vazio = document.querySelector(".agenda-vazia");
   if (vazio && itens.length && !restantes) vazio.hidden = false;
+  if (botao && caixa) {
+    if (caixa.querySelector(".proximo")) botao.hidden = false;
+    botao.addEventListener("click", function(){
+      var abrir = botao.getAttribute("aria-expanded") !== "true";
+      caixa.hidden = !abrir;
+      botao.setAttribute("aria-expanded", String(abrir));
+      botao.querySelector("span").textContent = botao.getAttribute(abrir ? "data-ocultar" : "data-ver");
+    });
+  }
 })();
 </script>`;
 
