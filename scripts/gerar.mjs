@@ -347,7 +347,7 @@ function idGoogleAgenda(valor) {
 // Na geração do site, o feed público da agenda (.ics) é lido e os próximos eventos
 // entram na página já desenhados no estilo do site. A automação roda de hora em hora.
 const FUSO = "America/Sao_Paulo";
-const JANELA_DIAS = 365;   // mostra eventos dos próximos 12 meses
+const MESES_A_FRENTE = 6;   // mostra eventos que começam nos próximos 6 meses (de hoje até o mesmo dia, 6 meses depois)
 const MAX_EVENTOS = 12;
 // "Ver atividades anteriores": do início do semestre anterior até hoje.
 // Semestres: janeiro–junho e julho–dezembro. Ex.: em março de 2027, mostra desde 1º de julho de 2026.
@@ -392,7 +392,8 @@ async function lerGoogleAgenda(id) {
   }
   const comp = new ICAL.Component(ICAL.parse(ics));
   for (const tz of comp.getAllSubcomponents("vtimezone")) ICAL.TimezoneService.register(new ICAL.Timezone(tz));
-  const agora = new Date(), limite = new Date(agora.getTime() + JANELA_DIAS * 864e5);
+  const agora = new Date(), limite = new Date(agora);
+  limite.setMonth(limite.getMonth() + MESES_A_FRENTE);
   const desde = INICIO_ANTERIORES;
   const bases = new Map(), soltos = [];
   const vevents = comp.getAllSubcomponents("vevent");
