@@ -44,6 +44,23 @@ const dd = d => String(d.getDate()).padStart(2, "0");
 const iso = d => d.toISOString().slice(0, 10);
 const COLS = ["c2", "c3", "c4"];
 // Muda sempre que o estilo muda: o navegador de quem visita busca a versão nova na hora.
+// largura e altura reais de uma imagem JPEG ou PNG (para reservar o espaço certo na página)
+function tamanhoImagem(caminho) {
+  try {
+    const b = readFileSync(join(RAIZ, caminho));
+    if (b[0] === 0x89 && b.toString("ascii", 1, 4) === "PNG") return [b.readUInt32BE(16), b.readUInt32BE(20)];
+    if (b[0] === 0xFF && b[1] === 0xD8) {
+      let i = 2;
+      while (i < b.length) {
+        if (b[i] !== 0xFF) { i++; continue; }
+        const m = b[i + 1], tam = b.readUInt16BE(i + 2);
+        if (m >= 0xC0 && m <= 0xCF && ![0xC4, 0xC8, 0xCC].includes(m)) return [b.readUInt16BE(i + 7), b.readUInt16BE(i + 5)];
+        i += 2 + tam;
+      }
+    }
+  } catch {}
+  return [600, 600];
+}
 const VERSAO_CSS = createHash("sha1").update(readFileSync(join(RAIZ, "assets", "estilo.css"))).digest("hex").slice(0, 8);
 /** Campo traduzido: usa o campo _en na versão em inglês e cai para o português se estiver vazio. */
 const tr = (obj, campo, L) => (L.id === "en" && obj?.[campo + "_en"]) ? obj[campo + "_en"] : (obj?.[campo] ?? "");
@@ -65,7 +82,7 @@ const IDIOMAS = {
     outro: { href: "en/", lang: "en", sigla: "EN", texto: " – read this page in English" },
     logoAlt: "Logo do Observatório de Universos Bíblicos",
     h1Prefixo: "Observatório de ",
-    apresentaRodape: "Faculdade Unida de Vitória<br>Grupo certificado pelo CNPq",
+    apresentaRodape: "PPGP Ciências das Religiões · FUV<br>Grupo certificado pelo CNPq",
     focosRotulo: "Focos de pesquisa", areas: "Áreas em diálogo", lideranca: "Liderança",
     focosIntro: n => `${["Um foco", "Dois focos", "Três focos"][n - 1]} ${n > 1 ? "articulam" : "articula"} as pesquisas do grupo.`,
     grupos: { "Líder": "Liderança", "Pesquisador(a)": "Pesquisadores doutores", "Estudante": "Estudantes", "Colaborador(a)": "Colaboradores estrangeiros" },
@@ -103,7 +120,7 @@ const IDIOMAS = {
     outro: { href: "../", lang: "pt-BR", sigla: "PT", texto: " – ler esta página em português" },
     logoAlt: "Logo of the Observatório de Universos Bíblicos",
     h1Prefixo: "Observatory of ",
-    apresentaRodape: "Faculdade Unida de Vitória, Brazil<br>Research group certified by CNPq",
+    apresentaRodape: "PPGP Ciências das Religiões · FUV, Brazil<br>Research group certified by CNPq",
     focosRotulo: "Research foci", areas: "Fields in dialogue", lideranca: "Leadership",
     focosIntro: n => `${["One focus structures", "Two foci structure", "Three foci structure"][n - 1]} the group's research.`,
     grupos: { "Líder": "Leadership", "Pesquisador(a)": "Researchers (PhD)", "Estudante": "Students", "Colaborador(a)": "International collaborators" },
@@ -292,7 +309,7 @@ function secaoEventos(L) {
     return `<article class="linha evento">
         <p class="cel c1 ev-data"><strong>${dataEvento(e, L)}</strong>${local ? `<span class="rotulo">${esc(local)}</span>` : ""}</p>
         ${e.imagem
-          ? `<figure class="cel c2 ev-img ${e.imagem_ajuste === "inteira" ? "contain" : ""}" style="margin:0"><img src="${esc(asset(L, e.imagem))}" alt="${esc(tr(e, "imagem_descricao", L))}" loading="lazy" width="600" height="600"></figure>`
+          ? `<figure class="cel c2 ev-img ${e.imagem_ajuste === "inteira" ? "contain" : ""}" style="margin:0"><img src="${esc(asset(L, e.imagem))}" alt="${esc(tr(e, "imagem_descricao", L))}" loading="lazy" width="${tamanhoImagem(e.imagem)[0]}" height="${tamanhoImagem(e.imagem)[1]}"></figure>`
           : `<div class="c2"></div>`}
         <div class="cel c3-4 ev-txt">
           <h3>${esc(e.titulo)}</h3>
