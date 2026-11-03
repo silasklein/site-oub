@@ -219,6 +219,20 @@ content:
         label: E-mail
         type: string
         description: "Opcional. Aparece como ícone de envelope."
+      - name: site
+        label: Site pessoal
+        type: string
+        description: "Opcional. Endereço completo do site da pessoa. Aparece como ícone depois dos demais."
+      - name: site_icone
+        label: Ícone do site pessoal
+        type: select
+        default: globo
+        options:
+          values:
+            - name: globo
+              label: Globo (padrão)
+            - name: simbolo-silas
+              label: Símbolo de Silas Klein
 
   # ------------------------------------------------------------------
   - name: eventos

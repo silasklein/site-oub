@@ -88,7 +88,7 @@ const IDIOMAS = {
     grupos: { "Líder": "Liderança", "Pesquisador(a)": "Pesquisadores doutores", "Estudante": "Estudantes", "Colaborador(a)": "Colaboradores estrangeiros" },
     nota: "A composição oficial do grupo está no", notaLink: "espelho do grupo no Diretório de Grupos de Pesquisa do CNPq",
     novaAba: " (abre em nova aba)",
-    lattes: n => `Currículo Lattes de ${n}`, orcid: n => `ORCID de ${n}`, linkedin: n => `LinkedIn de ${n}`, email: n => `E-mail de ${n}`,
+    lattes: n => `Currículo Lattes de ${n}`, orcid: n => `ORCID de ${n}`, linkedin: n => `LinkedIn de ${n}`, email: n => `E-mail de ${n}`, site: n => `Site de ${n}`,
     eventosIntro: "Simpósios e escolas organizados pelo grupo e por seus parceiros.",
     verProgramacao: "Ver programação",
     meses: ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"],
@@ -128,7 +128,7 @@ const IDIOMAS = {
     grupos: { "Líder": "Leadership", "Pesquisador(a)": "Researchers (PhD)", "Estudante": "Students", "Colaborador(a)": "International collaborators" },
     nota: "The official composition of the group is listed on the", notaLink: "group's page in the CNPq Directory of Research Groups",
     novaAba: " (opens in a new tab)",
-    lattes: n => `Lattes CV of ${n}`, orcid: n => `ORCID of ${n}`, linkedin: n => `LinkedIn of ${n}`, email: n => `E-mail ${n}`,
+    lattes: n => `Lattes CV of ${n}`, orcid: n => `ORCID of ${n}`, linkedin: n => `LinkedIn of ${n}`, email: n => `E-mail ${n}`, site: n => `Website of ${n}`,
     eventosIntro: "Symposia and schools organised by the group and its partners.",
     verProgramacao: "View programme",
     meses: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
@@ -150,14 +150,18 @@ const IDIOMAS = {
 };
 
 // ---------------------------------------------------------------- ícones
-const ICONES = ["lattes", "orcid", "linkedin", "instagram", "email", "googlecalendar", "calendario"];
+const ICONES = ["lattes", "orcid", "linkedin", "instagram", "email", "googlecalendar", "calendario", "site", "simbolo-silas"];
+// Ícones desenhados numa grade de pixels: sempre no tamanho exato do viewBox e com bordas nítidas (sem meio-pixel).
+const ICONES_PIXEL = { "simbolo-silas": [38, 22] };
 const sprite = `<svg xmlns="http://www.w3.org/2000/svg" style="display:none">${ICONES.map(n => {
   const svg = readFileSync(join(RAIZ, "assets", "icones", `${n}.svg`), "utf8");
   const viewBox = svg.match(/viewBox="([^"]+)"/)[1];
   const corpo = svg.replace(/^[\s\S]*?<svg[^>]*>/, "").replace(/<\/svg>\s*$/, "").replace(/<title>[\s\S]*?<\/title>/, "");
   return `<symbol id="i-${n}" viewBox="${viewBox}">${corpo}</symbol>`;
 }).join("")}</svg>`;
-const icone = n => `<svg aria-hidden="true" focusable="false"><use href="#i-${n}"></use></svg>`;
+const icone = n => ICONES_PIXEL[n]
+  ? `<svg class="pixel" width="${ICONES_PIXEL[n][0]}" height="${ICONES_PIXEL[n][1]}" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><use href="#i-${n}"></use></svg>`
+  : `<svg aria-hidden="true" focusable="false"><use href="#i-${n}"></use></svg>`;
 /** Corrige links digitados sem https:// e codifica letras acentuadas (ex.: linkedin.com/in/cídio). */
 const link = href => {
   let h = String(href || "").trim();
@@ -265,6 +269,7 @@ function iconesMembro(m, L) {
   if (m.orcid) partes.push(linkIcone(m.orcid, "orcid", L.orcid(nome), L));
   if (m.linkedin) partes.push(linkIcone(m.linkedin, "linkedin", L.linkedin(nome), L));
   if (m.email) partes.push(linkIcone(`mailto:${m.email}`, "email", L.email(nome), L, false));
+  if (m.site) partes.push(linkIcone(m.site, m.site_icone === "simbolo-silas" ? "simbolo-silas" : "site", L.site(nome), L));
   return partes.length ? `<div class="icones">${partes.join("")}</div>` : "";
 }
 
@@ -573,7 +578,7 @@ function jsonLd(L) {
     memberOf: { "@type": "EducationalOrganization", name: "Programa de Pós-Graduação Profissional em Ciências das Religiões (PPGP Ciências das Religiões)", parentOrganization: { "@type": "CollegeOrUniversity", name: "Faculdade Unida de Vitória" } },
     address: { "@type": "PostalAddress", addressLocality: "Vitória", addressRegion: "ES", addressCountry: "BR" },
     sameAs: [site.link_cnpq, site.instagram].filter(Boolean),
-    member: membros.map(m => ({ "@type": "Person", name: semTitulo(m.nome), sameAs: [m.orcid, m.lattes, m.linkedin].filter(Boolean).map(link) })),
+    member: membros.map(m => ({ "@type": "Person", name: semTitulo(m.nome), sameAs: [m.orcid, m.lattes, m.linkedin, m.site].filter(Boolean).map(link) })),
   };
   const evs = eventos.filter(e => e.titulo && e.data_inicio).map(e => ({
     "@context": "https://schema.org", "@type": "Event", name: e.titulo,

@@ -9,6 +9,10 @@ orcid.svg, linkedin.svg, instagram.svg, googlecalendar.svg
   As marcas ORCID, LinkedIn, Instagram e Google Agenda pertencem a seus donos e aparecem
   aqui só para indicar links para perfis nessas plataformas.
 
-email.svg, calendario.svg
+email.svg, calendario.svg, site.svg
   Tabler Icons 3.31.0 (https://tabler.io/icons), licença MIT,
   Copyright (c) 2020-2024 Paweł Kuna.
+
+simbolo-silas.svg
+  Símbolo do site pessoal de Silas Klein Cardoso, redesenhado sobre uma grade de pixels
+  (19 × 11 módulos de 2 px) a partir do arquivo enviado por ele. Uso exclusivo neste site.

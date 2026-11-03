@@ -237,6 +237,9 @@ footer .voltar:hover{text-decoration:underline}
 .icones a:hover{color:var(--laranja)}
 .icones svg{width:20px;height:20px;fill:currentColor}
 .icones.grandes svg{width:28px;height:28px}
+/* ícone em grade de pixels: tamanho fixo e inteiro (38 × 22), nunca reescalado */
+.icones svg.pixel{width:38px;height:22px;flex:none}
+.icones a:has(svg.pixel){min-width:62px}   /* 12 px de cada lado, o mesmo respiro visual dos outros ícones */
 .icones.grandes a{min-width:48px;min-height:48px}
 .contato-icones{padding-top:0}
 footer .fim{display:flex;flex-direction:column;justify-content:space-between;gap:16px}
