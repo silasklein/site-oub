@@ -15,5 +15,5 @@ email.svg, calendario.svg, site.svg
 
 simbolo-silas.svg
   Símbolo do site pessoal de Silas Klein Cardoso, redesenhado sobre uma grade de pixels
-  (33 × 19 px: barras de 5 px e intervalos de 2 px) a partir do arquivo enviado por ele.
+  (19 × 11 px, 1 px por módulo) a partir do arquivo enviado por ele.
   Uso exclusivo neste site.
