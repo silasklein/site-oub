@@ -152,7 +152,7 @@ const IDIOMAS = {
 // ---------------------------------------------------------------- ícones
 const ICONES = ["lattes", "orcid", "linkedin", "instagram", "email", "googlecalendar", "calendario", "site", "simbolo-silas"];
 // Ícones desenhados numa grade de pixels: sempre no tamanho exato do viewBox e com bordas nítidas (sem meio-pixel).
-const ICONES_PIXEL = { "simbolo-silas": [38, 22] };
+const ICONES_PIXEL = { "simbolo-silas": [33, 19] };
 const sprite = `<svg xmlns="http://www.w3.org/2000/svg" style="display:none">${ICONES.map(n => {
   const svg = readFileSync(join(RAIZ, "assets", "icones", `${n}.svg`), "utf8");
   const viewBox = svg.match(/viewBox="([^"]+)"/)[1];
