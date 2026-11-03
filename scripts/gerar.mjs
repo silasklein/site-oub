@@ -596,6 +596,18 @@ function jsonLd(L) {
   return JSON.stringify([org, ...evs]).replace(/</g, "\\u003c");
 }
 
+// ---------------------------------------------------------------- contador de visitas (GoatCounter)
+// Sem cookies e sem dados pessoais. Aceita o código da conta ("universosbiblicos") ou o endereço completo.
+function codigoGoatCounter(v) {
+  const t = String(v || "").trim();
+  const m = t.match(/^(?:https?:\/\/)?([a-z0-9-]+)\.goatcounter\.com/i) || t.match(/^([a-z0-9-]+)$/i);
+  return m ? m[1].toLowerCase() : "";
+}
+const contador = () => {
+  const c = codigoGoatCounter(site.goatcounter);
+  return c ? `<script data-goatcounter="https://${c}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>` : "";
+};
+
 // ---------------------------------------------------------------- script da página
 const scriptPagina = L => `<script>
 (function(){
@@ -709,6 +721,7 @@ ${cabecalho(L)}
 ${rodape(L)}
 
 ${scriptPagina(L)}
+${contador()}
 </body>
 </html>
 `;

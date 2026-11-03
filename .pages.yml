@@ -99,6 +99,10 @@ content:
         label: Link do Instagram do grupo
         type: string
         description: "Endereço completo, como https://www.instagram.com/universos.biblicos. Deixe vazio para esconder o ícone."
+      - name: goatcounter
+        label: Contador de visitas (GoatCounter)
+        type: string
+        description: "Código da conta no GoatCounter (a parte antes de .goatcounter.com) ou o endereço completo. Deixe vazio para desligar a contagem."
 
   # ------------------------------------------------------------------
   - name: site_en
